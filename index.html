@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container nav">
+        <a href="#" class="logo">Mon<span>Blog</span></a>
+
+        <nav>
+            <a href="#accueil">Accueil</a>
+            <a href="#articles">Articles</a>
+            <a href="#apropos">À propos</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <button id="themeBtn" class="theme-btn">🌙</button>
+    </div>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section id="accueil" class="hero">
+        <div class="container hero-content">
+            <div>
+                <p class="subtitle">BIENVENUE SUR MON BLOG</p>
+                <h1>Des idées qui<br><span>inspirent.</span></h1>
+                <p>
+                    Découvrez des articles sur la technologie,
+                    l'éducation, l'entrepreneuriat et le développement personnel.
+                </p>
+
+                <a href="#articles" class="btn">Découvrir les articles →</a>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-icon">✍️</div>
+                <h3>Écrire. Apprendre. Partager.</h3>
+                <p>
+                    Un espace pour partager des connaissances,
+                    des expériences et des idées.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTICLES -->
+    <section id="articles" class="articles-section">
+        <div class="container">
+
+            <div class="section-header">
+                <div>
+                    <p class="subtitle">MON BLOG</p>
+                    <h2>Derniers articles</h2>
+                </div>
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="🔎 Rechercher..."
+                >
+            </div>
+
+            <div class="categories">
+                <button class="category active" data-category="all">
+                    Tous
+                </button>
+
+                <button class="category" data-category="technologie">
+                    Technologie
+                </button>
+
+                <button class="category" data-category="education">
+                    Éducation
+                </button>
+
+                <button class="category" data-category="entrepreneuriat">
+                    Entrepreneuriat
+                </button>
+            </div>
+
+            <div id="articlesGrid" class="articles-grid">
+
+                <article
+                    class="article"
+                    data-category="technologie"
+                    data-title="Pourquoi apprendre la programmation"
+                >
+                    <div class="article-image tech">💻</div>
+
+                    <div class="article-content">
+                        <span class="tag">Technologie</span>
+                        <h3>Pourquoi apprendre la programmation aujourd'hui ?</h3>
+
+                        <p>
+                            La programmation est devenue une compétence
+                            importante dans de nombreux domaines.
+                        </p>
+
+                        <div class="article-footer">
+                            <span>12 Septembre 2026</span>
+                            <a href="#">Lire →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article
+                    class="article"
+                    data-category="education"
+                    data-title="Comment mieux apprendre"
+                >
+                    <div class="article-image education">📚</div>
+
+                    <div class="article-content">
+                        <span class="tag">Éducation</span>
+                        <h3>Comment mieux apprendre et retenir ses cours</h3>
+
+                        <p>
+                            Quelques méthodes simples pour améliorer
+                            son apprentissage et sa mémorisation.
+                        </p>
+
+                        <div class="article-footer">
+                            <span>10 Septembre 2026</span>
+                            <a href="#">Lire →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article
+                    class="article"
+                    data-category="entrepreneuriat"
+                    data-title="Créer son premier projet"
+                >
+                    <div class="article-image business">🚀</div>
+
+                    <div class="article-content">
+                        <span class="tag">Entrepreneuriat</span>
+                        <h3>Comment commencer son premier projet</h3>
+
+                        <p>
+                            Transformer une idée en projet demande de la
+                            méthode, de la patience et de la persévérance.
+                        </p>
+
+                        <div class="article-footer">
+                            <span>8 Septembre 2026</span>
+                            <a href="#">Lire →</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <p id="noResult" class="no-result">
+                Aucun article trouvé.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="apropos" class="about">
+        <div class="container about-content">
+
+            <div class="about-avatar">👨🏾‍💻</div>
+
+            <div>
+                <p class="subtitle">À PROPOS</p>
+                <h2>Bienvenue dans mon univers.</h2>
+
+                <p>
+                    Ce blog est un espace personnel consacré au partage
+                    d'idées, de connaissances et d'expériences.
+                </p>
+
+                <p>
+                    Mon objectif est de créer du contenu utile,
+                    accessible et inspirant.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section id="contact" class="newsletter">
+        <div class="container newsletter-content">
+
+            <div>
+                <p class="subtitle">NEWSLETTER</p>
+                <h2>Ne manquez aucun article.</h2>
+                <p>
+                    Recevez les nouveaux articles directement dans votre boîte mail.
+                </p>
+            </div>
+
+            <form id="newsletterForm">
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Votre adresse email"
+                    required
+                >
+
+                <button type="submit" class="btn">
+                    S'inscrire
+                </button>
+            </form>
+
+            <p id="message"></p>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container footer-content">
+        <p>© 2026 MonBlog. Tous droits réservés.</p>
+
+        <div>
+            <a href="#">Facebook</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Instagram</a>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
