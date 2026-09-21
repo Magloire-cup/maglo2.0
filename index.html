@@ -1,53 +1,290 @@
-<!doctype html>
-<html lang="fr" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Méridien Studio — Conseil Stratégique & Design Numérique</title>
-    <meta name="description" content="Site vitrine professionnel pour agence de conseil stratégique, design d'expérience et ingénierie numérique." />
-    
-    <!-- OpenGraph Social Cards -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Méridien Studio" />
-    <meta property="og:title" content="Méridien Studio — Conseil Stratégique & Design Numérique" />
-    <meta property="og:description" content="Agence de conseil stratégique, design de marque et ingénierie logicielle pour entreprises en pleine croissance." />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Méridien Studio — Conseil Stratégique & Design Numérique" />
-    <meta name="twitter:description" content="Agence de conseil stratégique, design de marque et ingénierie logicielle pour entreprises en pleine croissance." />
-    
-    <!-- Google Fonts: Plus Jakarta Sans & Syne -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Schema.org JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": "Méridien Studio",
-      "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-      "description": "Cabinet de conseil stratégique, design d'expérience utilisateur et ingénierie de solutions digitales sur-mesure.",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "34 Boulevard Haussmann",
-        "addressLocality": "Paris",
-        "postalCode": "75009",
-        "addressCountry": "FR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "48.8738",
-        "longitude": "2.3315"
-      },
-      "telephone": "+33189472010",
-      "priceRange": "€€€"
-    }
-    </script>
-  </head>
-  <body class="bg-[#fafaf9] text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <meta name="description"
+          content="Portfolio de Tchogli Ayéfouni Magloire, étudiant en génie mécanique.">
+
+    <title>Tchogli Ayéfouni Magloire | Génie Mécanique</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="container nav">
+
+        <a href="index.html" class="logo">
+            BIENVENUE SUR MON BLOG
+        </a>
+
+        <nav>
+            <a href="index.html" class="active">Accueil</a>
+            <a href="articles.html">Articles</a>
+            <a href="projets.html">Projets</a>
+        </nav>
+
+        <button id="themeBtn" class="theme-btn">🌙</button>
+
+    </div>
+</header>
+
+
+<main>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="container hero-content">
+
+            <div class="hero-text">
+
+                <p class="subtitle">
+                    GÉNIE MÉCANIQUE · TECHNOLOGIE · INNOVATION
+                </p>
+
+                <h1>
+                    Bonjour, je suis
+                    <span>Tchogli Ayéfouni Magloire.</span>
+                </h1>
+
+                <h2>
+                    Étudiant en Génie Mécanique
+                </h2>
+
+                <p class="hero-description">
+                    Je m'intéresse à la mécanique, à la conception,
+                    aux technologies et à l'innovation. Je partage ici
+                    mon parcours, mes projets, mes apprentissages et
+                    mes réflexions.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="projets.html" class="btn">
+                        Voir mes projets →
+                    </a>
+
+                    <a href="articles.html" class="btn secondary">
+                        Lire mes articles
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-card">
+
+                <div class="profile-icon">
+                    ⚙️
+                </div>
+
+                <p class="card-label">
+                    MON PROFIL
+                </p>
+
+                <h3>
+                    Génie mécanique
+                </h3>
+
+                <p>
+                    Apprendre · Concevoir · Expérimenter · Innover
+                </p>
+
+                <div class="card-line"></div>
+
+                <div class="card-info">
+                    <span>Étudiant</span>
+                    <span>2026</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- À PROPOS -->
+
+    <section class="about">
+
+        <div class="container about-content">
+
+            <div class="about-avatar">
+                ⚙️
+            </div>
+
+            <div class="about-text">
+
+                <p class="subtitle">
+                    À PROPOS DE MOI
+                </p>
+
+                <h2>
+                    Construire aujourd'hui
+                    les compétences de demain.
+                </h2>
+
+                <p>
+                    Je m'appelle
+                    <strong>Tchogli Ayéfouni Magloire</strong>.
+                    Je suis étudiant en génie mécanique avec un intérêt
+                    pour la conception, la mécanique industrielle,
+                    les systèmes techniques et les nouvelles technologies.
+                </p>
+
+                <p>
+                    Mon objectif est de développer mes compétences
+                    scientifiques, techniques et pratiques afin de
+                    participer à la conception de solutions utiles
+                    et innovantes.
+                </p>
+
+                <a href="projets.html" class="text-link">
+                    Découvrir mon parcours →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DOMAINES -->
+
+    <section class="domains">
+
+        <div class="container">
+
+            <div class="section-header center">
+
+                <p class="subtitle">
+                    MES DOMAINES
+                </p>
+
+                <h2>
+                    Ce qui m'intéresse
+                </h2>
+
+            </div>
+
+
+            <div class="domains-grid">
+
+                <div class="domain-card">
+                    <div class="domain-icon">⚙️</div>
+                    <h3>Génie mécanique</h3>
+                    <p>
+                        Mécanique, conception et systèmes techniques.
+                    </p>
+                </div>
+
+                <div class="domain-card">
+                    <div class="domain-icon">💻</div>
+                    <h3>Technologie</h3>
+                    <p>
+                        Programmation et outils numériques.
+                    </p>
+                </div>
+
+                <div class="domain-card">
+                    <div class="domain-icon">📐</div>
+                    <h3>Conception</h3>
+                    <p>
+                        Analyse, modélisation et conception technique.
+                    </p>
+                </div>
+
+                <div class="domain-card">
+                    <div class="domain-icon">🚀</div>
+                    <h3>Innovation</h3>
+                    <p>
+                        Transformer les idées en projets concrets.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <section class="cta">
+
+        <div class="container cta-content">
+
+            <div>
+                <p class="subtitle">
+                    DÉCOUVREZ MON UNIVERS
+                </p>
+
+                <h2>
+                    De la théorie à la réalisation.
+                </h2>
+
+                <p>
+                    Découvrez mes projets et mes réflexions
+                    autour de l'ingénierie et de la technologie.
+                </p>
+            </div>
+
+            <a href="projets.html" class="btn">
+                Mes projets →
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+
+            <p>
+                Tchogli Ayéfouni Magloire<br>
+                Étudiant en Génie Mécanique
+            </p>
+        </div>
+
+        <div class="footer-links">
+
+            <a href="index.html">Accueil</a>
+            <a href="articles.html">Articles</a>
+            <a href="projets.html">Projets</a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026
+            Tous droits réservés.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
 </html>
-

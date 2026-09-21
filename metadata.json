@@ -1,6 +1,0 @@
-{
-  "name": "Méridien Studio",
-  "description": "Site vitrine professionnel pour agence de conseil stratégique, design d'expérience et ingénierie numérique.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
