@@ -2337,6 +2337,48 @@ footer {
     }
 
 
+    .contact {
+
+        padding: 0 0 75px;
+
+    }
+
+
+    .contact-content {
+
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        padding: 30px 24px;
+
+    }
+
+
+    .contact-form {
+
+        min-width: 0;
+
+    }
+
+
+    .form-row {
+
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+
+    }
+
+
+    .contact-form input,
+    .contact-form textarea {
+
+        min-width: 0;
+
+    }
+
+
     .footer-content {
 
         flex-direction: column;
