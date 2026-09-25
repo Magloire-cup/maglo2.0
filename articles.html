@@ -21,7 +21,7 @@
     <div class="container nav">
 
         <a href="index.html" class="logo">
-            LES ARTICLE
+            LES ARTICLES
         </a>
 
         <nav>
@@ -36,6 +36,18 @@
 
             <a href="projets.html">
                 Projets
+            </a>
+
+            <a href="parcours.html">
+                Parcours
+            </a>
+
+            <a href="ressources.html">
+                Ressources
+            </a>
+
+            <a href="contact.html">
+                Contact
             </a>
 
         </nav>
@@ -96,11 +108,14 @@
 
                 </div>
 
+                <label class="search-label" for="search">Rechercher un article</label>
                 <input
-                    type="text"
+                    type="search"
                     id="search"
                     placeholder="🔎 Rechercher..."
+                    aria-describedby="searchHint"
                 >
+                <span id="searchHint" class="search-hint">Appuie sur / pour rechercher</span>
 
             </div>
 
@@ -266,7 +281,7 @@
             </div>
 
 
-            <p id="noResult" class="no-result">
+            <p id="noResult" class="no-result" hidden>
                 Aucun article trouvé.
             </p>
 
@@ -303,6 +318,10 @@
             <a href="projets.html">
                 Projets
             </a>
+
+            <a href="parcours.html">Parcours</a>
+            <a href="ressources.html">Ressources</a>
+            <a href="contact.html">Contact</a>
 
         </div>
 
