@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Du croquis au modèle 3D : bien démarrer en CAO | Tchogli Ayéfouni Magloire</title>
+
+    <meta name="description"
+          content="Méthode pas à pas pour débuter en conception assistée par ordinateur : croquis, contraintes, arbre de construction, assemblage et préparation des plans de fabrication.">
+    <meta name="author" content="Tchogli Ayéfouni Magloire">
+    <meta name="keywords"
+          content="CAO, conception assistée par ordinateur, modèle 3D, esquisse, contraintes, assemblage, plan de fabrication, étudiant génie mécanique">
+    <meta name="theme-color" content="#f5f7fb">
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Tchogli Ayéfouni Magloire">
+    <meta property="og:title" content="Du croquis au modèle 3D : bien démarrer en CAO">
+    <meta property="og:description"
+          content="Le passage du papier à l'écran se joue sur quelques habitudes simples : un croquis coté, des esquisses contraintes, un arbre lisible et des plans compréhensibles par l'atelier.">
+    <meta property="og:image" content="assets/article-cao.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        /* Applique le thème et l'accent mémorisés avant le premier rendu */
+        (function () {
+            var root = document.documentElement;
+            var theme = "light";
+            var accent = "azur";
+            try {
+                var stored = localStorage.getItem("theme");
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                    theme = "dark";
+                }
+                accent = localStorage.getItem("accent") || "azur";
+            } catch (error) {
+                /* stockage indisponible : valeurs par défaut */
+            }
+            root.setAttribute("data-theme", theme);
+            root.setAttribute("data-accent", accent);
+        })();
+    </script>
+
+    <noscript>
+        <style>
+            .reveal { opacity: 1; transform: none; }
+        </style>
+    </noscript>
+</head>
+
+<body>
+
+<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+<div class="read-progress" aria-hidden="true"></div>
+
+<!-- Bibliothèque d'icônes (SVG sprite) -->
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
+     focusable="false" xmlns="http://www.w3.org/2000/svg">
+
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v1.8M12 19.2V21M4.2 4.2l1.3 1.3M18.5 18.5l1.3 1.3M3 12h1.8M19.2 12H21M4.2 19.8l1.3-1.3M18.5 5.5l1.3-1.3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.9A8.6 8.6 0 1 1 11.1 3a6.8 6.8 0 0 0 9.9 9.9Z"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2s6 6.4 6 10.4a6 6 0 0 1-12 0c0-4 6-10.4 6-10.4Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.2"/><path d="M5 15H4.2A1.2 1.2 0 0 1 3 13.8V4.2A1.2 1.2 0 0 1 4.2 3h9.6A1.2 1.2 0 0 1 15 4.2V5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3.5 6.5 8.5 6.2 8.5-6.2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 3 9.8l7.7 3.5 3.5 7.7Z"/><path d="M21.5 2.5 10.7 13.3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 11h17"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.3 13.3 20.6a2 2 0 0 1-2.8 0l-7.1-7.1A2 2 0 0 1 2.8 12V5.2a2 2 0 0 1 2-2h6.8a2 2 0 0 1 1.4.6l7.6 7.5a2 2 0 0 1 0 2Z"/><circle cx="7.6" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18.5 14v4.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="m8.4 10.7 7.2-4.2M8.4 13.3l7.2 4.2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5a4.2 4.2 0 0 0 5.9 0l2.9-2.9a4.2 4.2 0 0 0-5.9-5.9l-1.3 1.3"/><path d="M13.5 10.5a4.2 4.2 0 0 0-5.9 0l-2.9 2.9a4.2 4.2 0 0 0 5.9 5.9l1.3-1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.8"/><path d="M4.8 20.4a7.2 7.2 0 0 1 14.4 0"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s7-6.3 7-11.2a7 7 0 1 0-14 0c0 4.9 7 11.2 7 11.2Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-8.5 8.5H4.5l2.3-3.2A8.5 8.5 0 1 1 20.5 12Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C12 5 10.7 3.6 8.4 3.6H3v13.6h5.4C10.7 17.2 12 18.6 12 20.2"/><path d="M12 6.6c0-1.6 1.3-3 3.6-3H21v13.6h-5.4c-2.3 0-3.6 1.4-3.6 3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.2H7.2A2.2 2.2 0 0 0 5 5.4v13.2a2.2 2.2 0 0 0 2.2 2.2h9.6a2.2 2.2 0 0 0 2.2-2.2V8Z"/><path d="M13.8 3.4V8h5.1"/><path d="M8.5 13h7M8.5 16.5h4.5"/></symbol>
+    <symbol id="i-graduate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4.2-9 4.1 9 4.1 9-4.1Z"/><path d="M7 10.4V15c0 1.4 2.2 2.6 5 2.6s5-1.2 5-2.6v-4.6"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.2" width="18" height="13" rx="2.4"/><path d="M9 7.2V5.4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.8"/><path d="M3.5 12.6h17"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 18h5.6"/><path d="M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.4 10.9c.6.5 1 1.2 1 2h4.8c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 17 5.8-5.8 3.8 3.8L20 8.2"/><path d="M15 8.2h5v5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h18"/><rect x="5" y="11.5" width="3.6" height="6" rx="1.2"/><rect x="10.2" y="7.5" width="3.6" height="10" rx="1.2"/><rect x="15.4" y="13.5" width="3.6" height="4" rx="1.2"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.3v7.4L12 20.9 3.2 15.7V8.3L12 3.1Z"/><path d="M3.5 8.5 12 13.4l8.5-4.9"/><path d="M12 13.4v7.5"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.2 8.8 4.6L12 12.4 3.2 7.8Z"/><path d="m3.2 12.2 8.8 4.6 8.8-4.6"/><path d="m3.2 16.4 8.8 4.6 8.8-4.6"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 15.2 15.2 3.4l5.4 5.4L8.8 20.6Z"/><path d="m7.6 11 2.2 2.2M11 7.6l2.2 2.2M14.4 4.2l2.2 2.2"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8l-4.6 4 4.6 4"/><path d="m15.4 8 4.6 4-4.6 4"/><path d="M13.4 4.8 10.6 19.2"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v5.6L5.7 17a2.4 2.4 0 0 0 2.1 3.6h8.4a2.4 2.4 0 0 0 2.1-3.6L13.5 8.6V3"/><path d="M7.6 14.4h8.8"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="2.2"/><path d="M10.5 2.6v4.4M13.5 2.6v4.4M10.5 17v4.4M13.5 17v4.4M2.6 10.5H7M2.6 13.5H7M17 10.5h4.4M17 13.5h4.4"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2h9.4a2.9 2.9 0 1 0-2.9-2.9"/><path d="M3 15.8h13.4a2.9 2.9 0 1 1-2.9 2.9"/><path d="M3 12h16.4a2.9 2.9 0 1 0-2.9-2.9"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5.2 5.8v6.1c0 4.3 2.9 7.9 6.8 9.4 3.9-1.5 6.8-5.1 6.8-9.4V5.8Z"/><path d="m9.4 11.9 2 2 3.2-3.4"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11.5 3.8 1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6Z"/><path d="m18 15.4.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12a8.6 8.6 0 1 1-2.6-6.2"/><path d="M20.8 3.6v5h-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10.2 8.6 5.6 3.4-5.6 3.4Z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3Z"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.2" rx="7.4" ry="3.2"/><path d="M4.6 6.2v11.6c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2V6.2"/><path d="M4.6 12c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2.4 4.8 13.6h6l-1.2 8 8.6-11.2h-6Z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 4.4l4 4L8.8 19.2H4.8v-4Z"/><path d="m13.6 6.4 4 4"/></symbol>
+    <symbol id="i-nut" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 20 7.8v8.4l-8 4.6-8-4.6V7.8Z"/><circle cx="12" cy="12" r="3.1"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.4"/><path d="M12 2.2v3.4M12 18.4v3.4M3.4 5.6 6 8.2M18 15.8l2.6 2.6M2.2 12h3.4M18.4 12h3.4M3.4 18.4 6 15.8M18 8.2l2.6-2.6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6.2 6.4 12 6.4 21.5 12 21.5 12 17.8 17.6 12 17.6 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5.4"/><path d="m8.6 13.8-1.4 7 4.8-2.8 4.8 2.8-1.4-7"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.4S3.6 15.4 3.6 9.8a4.7 4.7 0 0 1 8.4-3 4.7 4.7 0 0 1 8.4 3c0 5.6-8.4 10.6-8.4 10.6Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+
+<!-- =========================================================
+     EN-TÊTE
+     ========================================================= -->
+
+<header class="site-header">
+    <div class="container nav-bar">
+
+        <a class="brand" href="index.html" aria-label="Accueil, Tchogli Ayéfouni Magloire">
+            <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <defs>
+                    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                    </linearGradient>
+                </defs>
+                <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGrad)"></rect>
+                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                    <circle cx="24" cy="24" r="8.4"></circle>
+                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                </g>
+            </svg>
+            <span>
+                <span class="brand-name">Tchogli <span>Magloire</span></span>
+                <span class="brand-role">Génie mécanique</span>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a class="nav-link" href="index.html">Accueil</a>
+            <a class="nav-link active" href="articles.html" aria-current="page">Articles</a>
+            <a class="nav-link" href="projets.html">Projets</a>
+            <a class="nav-link" href="parcours.html">Parcours</a>
+            <a class="nav-link" href="ressources.html">Ressources</a>
+            <a class="nav-link" href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="accent-wrap" id="accentWrap">
+                <button class="icon-btn" id="accentBtn" type="button"
+                        aria-expanded="false" aria-haspopup="true"
+                        aria-label="Changer la couleur d'accent" title="Couleur d'accent">
+                    <svg class="i" aria-hidden="true"><use href="#i-droplet"></use></svg>
+                </button>
+
+                <div class="accent-pop" id="accentPop" role="dialog" aria-label="Couleur d'accent">
+                    <span class="accent-pop-title">Couleur d'accent</span>
+                    <div class="accent-list">
+                        <button class="accent-swatch" type="button" data-accent="azur"
+                                aria-label="Accent azur" title="Azur"></button>
+                        <button class="accent-swatch" type="button" data-accent="ambre"
+                                aria-label="Accent ambre" title="Ambre"></button>
+                        <button class="accent-swatch" type="button" data-accent="emeraude"
+                                aria-label="Accent émeraude" title="Émeraude"></button>
+                        <button class="accent-swatch" type="button" data-accent="violet"
+                                aria-label="Accent violet" title="Violet"></button>
+                    </div>
+                    <p class="accent-pop-note">
+                        L'accent colore tout le site et reste mémorisé sur cet appareil.
+                    </p>
+                </div>
+            </div>
+
+            <button class="icon-btn" type="button" data-theme-toggle
+                    aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                    title="Passer en thème sombre">
+                <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+            </button>
+
+            <a class="btn sm nav-cta" href="contact.html">Me contacter</a>
+
+            <button class="burger" id="menuBtn" type="button"
+                    aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobilePanel">
+                <span></span>
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+
+<!-- MENU MOBILE -->
+
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+    <div class="mobile-overlay"></div>
+
+    <aside class="mobile-drawer" role="dialog" aria-label="Menu de navigation">
+
+        <div class="mobile-head">
+            <span class="brand">
+                <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="brandGradMenu" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" style="stop-color:var(--primary)"></stop>
+                            <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                        </linearGradient>
+                    </defs>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradMenu)"></rect>
+                    <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                        <circle cx="24" cy="24" r="8.4"></circle>
+                        <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    </g>
+                </svg>
+                <span>
+                    <span class="brand-name">Tchogli <span>Magloire</span></span>
+                    <span class="brand-role">Génie mécanique</span>
+                </span>
+            </span>
+
+            <button class="icon-btn" id="mobileClose" type="button" aria-label="Fermer le menu">
+                <svg class="i" aria-hidden="true"><use href="#i-close"></use></svg>
+            </button>
+        </div>
+
+        <nav class="m-nav" aria-label="Navigation mobile">
+            <a href="index.html">Accueil <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a class="active" href="articles.html">Articles <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="projets.html">Projets <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="parcours.html">Parcours <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="ressources.html">Ressources <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="contact.html">Contact <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+        </nav>
+
+        <p class="mobile-label">Apparence</p>
+
+        <div class="m-options">
+            <div class="m-option-row">
+                <span>Thème sombre</span>
+                <button class="icon-btn" type="button" data-theme-toggle
+                        aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                        title="Passer en thème sombre">
+                    <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                    <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+                </button>
+            </div>
+
+            <div class="m-option-row">
+                <span>Couleur</span>
+                <div class="accent-list">
+                    <button class="accent-swatch" type="button" data-accent="azur"
+                            aria-label="Accent azur" title="Azur"></button>
+                    <button class="accent-swatch" type="button" data-accent="ambre"
+                            aria-label="Accent ambre" title="Ambre"></button>
+                    <button class="accent-swatch" type="button" data-accent="emeraude"
+                            aria-label="Accent émeraude" title="Émeraude"></button>
+                    <button class="accent-swatch" type="button" data-accent="violet"
+                            aria-label="Accent violet" title="Violet"></button>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn block m-cta" href="contact.html">
+            Écrire un message
+            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+        </a>
+
+    </aside>
+</div>
+
+
+<main id="contenu">
+
+    <article class="article-page">
+        <div class="container">
+
+            <nav class="breadcrumb" aria-label="Fil d'Ariane">
+                <a href="index.html">Accueil</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <a href="articles.html">Articles</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <span>Conception assistée par ordinateur</span>
+            </nav>
+
+            <div class="article-head">
+                <p class="eyebrow">Conception</p>
+                <h1>Du croquis au modèle 3D : bien démarrer en CAO</h1>
+                <p class="article-lead">
+                    La CAO ne consiste pas à dessiner à l'écran, mais à décrire une pièce
+                    de façon logique. Les premières habitudes prises conditionnent tout :
+                    un modèle clair se modifie en quelques minutes, un modèle bricolé se
+                    reprend entièrement.
+                </p>
+
+                <div class="article-meta">
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>
+                        20 septembre 2026
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-clock"></use></svg>
+                        <span data-reading-meta>7 min de lecture</span>
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-user"></use></svg>
+                        Tchogli Ayéfouni Magloire
+                    </span>
+                </div>
+            </div>
+
+            <div class="article-hero-img">
+                <img src="assets/article-cao.png"
+                     alt="Poste de conception assistée par ordinateur avec modèle 3D d'une pièce mécanique">
+            </div>
+
+            <div class="article-layout">
+
+                <div class="article-main">
+
+                    <div class="article-body">
+
+                        <p>
+                            La première fois que l'on ouvre un logiciel de CAO, l'écran
+                            impressionne : des dizaines d'icônes, des arbres de construction,
+                            des plans de référence dans tous les sens. Pourtant, la logique
+                            de fond tient en une phrase : <strong>on décrit une intention,
+                            pas un dessin</strong>. Une pièce correctement modélisée sait
+                            pourquoi elle a telle épaisseur, tel rayon, tel jeu fonctionnel.
+                        </p>
+
+                        <h2>Pourquoi tout commence par un croquis</h2>
+
+                        <p>
+                            S'asseoir devant le logiciel sans avoir réfléchi revient à
+                            écrire un rapport sans plan. Le croquis papier, même maladroit,
+                            force à répondre aux bonnes questions : quelles sont les surfaces
+                            fonctionnelles ? Où passent les efforts ? Quelles dimensions
+                            sont imposées par l'environnement, et lesquelles sont libres ?
+                        </p>
+                        <p>
+                            Un croquis utile en génie mécanique contient trois choses :
+                            les <strong>dimensions critiques</strong> (entraxes, diamètres
+                            d'alésage, hauteurs d'appui), les <strong>tolérances
+                            pressenties</strong> pour les ajustements, et le <strong>sens de
+                            la matière</strong> : une pièce moulée, usinée ou imprimée ne se
+                            conçoit pas de la même manière. Ces trois informations guideront
+                            chaque choix dans le logiciel.
+                        </p>
+
+                        <h2>Choisir son premier logiciel sans se tromper</h2>
+
+                        <p>
+                            Il n'existe pas de « meilleur » logiciel, seulement des outils
+                            adaptés à un usage. Pour un étudiant, le critère décisif n'est
+                            pas la puissance, mais la capacité à produire une pièce, un
+                            assemblage et un plan lisible dans un délai raisonnable.
+                        </p>
+
+                        <ul class="check-list">
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Un modeleur paramétrique</strong> : les cotes
+                                pilotent la géométrie et se modifient sans redessiner.
+                                C'est le standard en bureau d'études.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Une version étudiante gratuite</strong> : les
+                                principaux éditeurs proposent des licences pédagogiques
+                                complètes, sans limite de durée d'apprentissage.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Une communauté active</strong> : des tutoriels
+                                et des modèles partagés font gagner des semaines au
+                                débutant.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>L'export standard</strong> : formats d'échange
+                                et de fabrication 3D ouverts, pour ne pas être enfermé dans
+                                un seul outil.</span>
+                            </li>
+                        </ul>
+
+                        <p>
+                            Le piège classique consiste à changer d'outil tous les deux
+                            mois. Mieux vaut maîtriser un logiciel en profondeur (esquisses,
+                            contraintes, assemblages, mise en plan) que d'effleurer cinq
+                            interfaces. Les concepts se transfèrent ; l'aisance, elle,
+                            se construit par la répétition.
+                        </p>
+
+                        <blockquote>
+                            Un bon modèle ne se juge pas à son apparence, mais au temps
+                            qu'il fait gagner à la prochaine modification.
+                        </blockquote>
+
+                        <h2>Les habitudes d'un modèle propre</h2>
+
+                        <p>
+                            Avec l'expérience, on remarque que les modèles faciles à
+                            reprendre partagent les mêmes caractéristiques. Aucune n'est
+                            spectaculaire, mais ensemble elles changent tout.
+                        </p>
+
+                        <h3>Nommer avant de dessiner</h3>
+                        <p>
+                            Un arbre de construction qui contient « Esquisse 14 »,
+                            « Extrusion 22 » et « Congé 7 » devient illisible au bout de
+                            deux semaines. Renommer chaque étape au moment où on la crée
+                            (« alésage principal », « nervure de renfort ») prend cinq
+                            secondes et évite des heures de recherche plus tard.
+                        </p>
+
+                        <h3>Esquisser simple, contraindre complètement</h3>
+                        <p>
+                            Une esquisse doit être entièrement contrainte : plus aucune
+                            ligne ne doit pouvoir bouger quand on la déplace à la souris.
+                            Cela garantit que la pièce se comportera de façon prévisible
+                            lorsque l'on modifiera une cote. Les contraintes géométriques
+                            (parallélisme, symétrie, tangence) coûtent moins cher que
+                            des cotes répétées, car elles encodent l'intention de
+                            conception.
+                        </p>
+
+                        <h3>Un plan de référence choisi, pas subi</h3>
+                        <p>
+                            Beaucoup de débutants dessinent dans l'espace tel qu'il
+                            apparaît à l'écran. Mieux vaut décider consciemment de
+                            l'origine et de l'orientation : la face d'appui principale
+                            est souvent un bon plan de départ, car elle sert de référence
+                            en usinage comme en contrôle.
+                        </p>
+
+                        <h2>De l'esquisse à la pièce : lire l'arbre de construction</h2>
+
+                        <p>
+                            L'arbre de construction raconte l'histoire de la pièce :
+                            chaque esquisse, chaque fonction (extrusion, révolution,
+                            balayage, lissage) s'empile dans l'ordre. La règle d'or
+                            consiste à faire apparaître la logique fonctionnelle : on
+                            commence par les volumes majeurs, puis on ajoute les détails
+                            qui en dépendent.
+                        </p>
+
+                        <p>
+                            Les fonctions de répétition méritent une attention
+                            particulière. Un perçage défini une fois, puis répété en
+                            réseau, exprime « six trous régulièrement répartis » ; six
+                            perçages indépendants n'expriment rien et obligent à tout
+                            refaire si l'entraxe change. Cette différence sépare un modèle
+                            étudiant d'un modèle professionnel.
+                        </p>
+
+                        <div class="callout">
+                            <strong>
+                                <svg class="i" aria-hidden="true"><use href="#i-lightbulb"></use></svg>
+                                Trois questions avant de valider une fonction
+                            </strong>
+                            <ul>
+                                <li>Si le diamètre change demain, combien de cotes devrai-je retoucher ?</li>
+                                <li>La fonction exprime-t-elle une intention ou un empilement de valeurs ?</li>
+                                <li>Un relecteur comprendrait-il la pièce en lisant uniquement l'arbre ?</li>
+                            </ul>
+                        </div>
+
+                        <h2>Assembler avec des contraintes, pas des coordonnées</h2>
+
+                        <p>
+                            L'assemblage est le moment où le modèle 3D se rapproche du
+                            mécanisme réel. L'erreur fréquente consiste à positionner les
+                            pièces « à la main », en les faisant glisser jusqu'à ce que
+                            tout s'aligne visuellement. Cela fonctionne jusqu'à la
+                            première modification.
+                        </p>
+                        <p>
+                            La bonne pratique est de reproduire la liaison mécanique :
+                            une surface contre une surface, un axe dans un alésage, une
+                            rotation autour d'un axe. Le modèle devient alors
+                            auto-cohérent : déplacer une pièce met à jour toutes les
+                            autres. C'est aussi le meilleur moyen de détecter les
+                            interférences et de vérifier les débattements avant de
+                            fabriquer quoi que ce soit.
+                        </p>
+
+                        <h2>Préparer le modèle pour la fabrication</h2>
+
+                        <p>
+                            Un modèle 3D n'est pas encore un objet. La dernière étape
+                            consiste à communiquer avec l'atelier ou l'imprimante :
+                            choix des tolérances, états de surface, matières, et
+                            surtout lisibilité des plans.
+                        </p>
+                        <ul>
+                            <li><strong>Mise en plan cohérente</strong> : vues suffisantes
+                            pour comprendre la pièce, sans surcharger. Une vue de face,
+                            une vue de dessus et une coupe bien placée valent mieux que
+                            six vues redondantes.</li>
+                            <li><strong>Cotation orientée fabrication</strong> : on cote ce
+                            que l'usine doit mesurer, dans l'ordre des usinages, pas les
+                            dimensions qui arrangent le dessinateur.</li>
+                            <li><strong>Fichier propre pour la fabrication additive</strong> :
+                            une géométrie étanche, des parois compatibles avec le procédé
+                            et une orientation réfléchie limitent les ratés d'impression.</li>
+                        </ul>
+
+                        <p>
+                            Les tolérances méritent une attention particulière : trop
+                            serrées, elles font exploser le coût d'usinage ; trop larges,
+                            elles empêchent le fonctionnement. La bonne question n'est
+                            jamais « quelle précision puis-je obtenir ? » mais « de quelle
+                            précision ce contact a-t-il réellement besoin ? ». Un alésage
+                            de palier et un simple trou de passage ne demandent pas le
+                            même soin, et le plan doit rendre cette différence visible.
+                        </p>
+
+                        <h2>Travailler à plusieurs sur un même modèle</h2>
+
+                        <p>
+                            Un modèle vit rarement seul. Un binôme, un encadrant, un
+                            atelier : chacun doit pouvoir ouvrir le fichier et comprendre
+                            ce qu'il contient sans poser de questions. Quelques
+                            conventions élémentaires transforment un fichier personnel en
+                            document de travail partagé.
+                        </p>
+
+                        <p>
+                            Nommer les plans et les fonctions d'après leur rôle (<em>perçage fixations capteur</em> plutôt que
+                            <em>Esquisse47</em>) coûte trois secondes et économise des
+                            heures de fouille. Une nomenclature correctement renseignée
+                            dans l'assemblage évite les allers-retours sur les références
+                            de vis et de roulements. Enfin, une version figée avant
+                            chaque envoi (un export ou un dossier daté) protège contre
+                            les modifications faites après coup sur la version de travail.
+                        </p>
+
+                        <p>
+                            Ce sont des habitudes de bureau d'études, pas des contraintes
+                            de logiciel. Elles s'acquièrent d'autant plus vite qu'on les
+                            applique tôt, sur des projets courts, quand le coût d'une
+                            remise en ordre reste faible.
+                        </p>
+
+                        <h2>Les erreurs de débutant qui coûtent des heures</h2>
+
+                        <p>
+                            Les mêmes pièges reviennent dans presque tous les premiers
+                            projets. Les reconnaître à l'avance fait gagner un temps
+                            considérable :
+                        </p>
+                        <ul>
+                            <li><strong>Modéliser les filetages en géométrie réelle</strong>,
+                            inutile et lourd : une annotation suffit sur le plan.</li>
+                            <li><strong>Multiplier les congés trop tôt</strong> : ils
+                            dépendent des formes finales et cassent à chaque modification
+                            s'ils sont posés prématurément.</li>
+                            <li><strong>Travailler sans unités vérifiées</strong> : une
+                            pièce modélisée en pouces se remarque rarement avant
+                            l'usinage.</li>
+                            <li><strong>Ignorer les jeux d'assemblage</strong> : deux pièces
+                            modélisées au contact nominal ne s'assembleront jamais dans la
+                            réalité.</li>
+                        </ul>
+
+                        <h2>Progresser par projets courts</h2>
+
+                        <p>
+                            La maîtrise vient de la répétition sur des objets complets.
+                            Un support de capteur, une bride, un arbre avec épaulement et
+                            rainure de clavette : ces pièces simples couvrent l'essentiel
+                            des fonctions d'un modeleur paramétrique. Chacune se termine
+                            par un assemblage et un plan, même sommaire.
+                        </p>
+                        <p>
+                            Au bout de quelques semaines de cette pratique, la question
+                            n'est plus « comment dessiner cette forme ? » mais « quelle
+                            forme répond au besoin ? ». C'est exactement le déplacement
+                            que la CAO doit produire : l'outil s'efface derrière le
+                            raisonnement mécanique.
+                        </p>
+
+                    </div>
+
+                    <div class="share-row">
+                        <span class="label">Partager</span>
+
+                        <button class="share-btn" type="button" data-copy-link
+                                data-copy-message="Lien de l'article copié !">
+                            <svg class="i" aria-hidden="true"><use href="#i-link"></use></svg>
+                            Copier le lien
+                        </button>
+
+                    </div>
+
+                    <div class="author-box">
+                        <div class="author-avatar">
+                            <svg viewBox="0 0 48 48" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="brandGradAuthor" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="0" y="0" width="48" height="48" fill="url(#brandGradAuthor)"></rect>
+                                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                                    <circle cx="24" cy="24" r="8.4"></circle>
+                                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Tchogli Ayéfouni Magloire</strong>
+                            <p>Étudiant en génie mécanique. J'écris ce que j'apprends en concevant, en calculant et en fabriquant.</p>
+                            <a class="text-link" href="contact.html">
+                                Me poser une question
+                                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <aside class="article-side">
+
+                    <nav class="toc" aria-label="Sommaire de l'article">
+                        <span class="toc-title">Sommaire</span>
+                        <ol></ol>
+                    </nav>
+
+                    <div class="side-card">
+                        <strong>Un modèle à reprendre ?</strong>
+                        <p>
+                            Esquisse mal contrainte, arbre illisible, assemblage qui
+                            explosent : envoyez-moi le fichier ou des captures, je vous
+                            indique par où commencer.
+                        </p>
+                        <a class="btn sm" href="contact.html">
+                            Demander un avis
+                            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+                        </a>
+                    </div>
+
+                    <div class="side-card">
+                        <strong>Ressources pour pratiquer</strong>
+                        <p>
+                            Des liens utiles pour s'entraîner sur des pièces réelles et
+                            progresser méthode par méthode.
+                        </p>
+                        <a class="text-link" href="ressources.html">
+                            Voir les ressources
+                            <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                        </a>
+                    </div>
+
+                </aside>
+
+            </div>
+
+            <nav class="post-nav" aria-label="Navigation entre les articles">
+                <a href="article-mecanique.html">
+                    <span>Article précédent</span>
+                    <strong>Comment un arbre transmet-il un couple ?</strong>
+                </a>
+                <a class="next" href="article-ia.html">
+                    <span>Article suivant</span>
+                    <strong>L'intelligence artificielle au service de l'ingénierie</strong>
+                </a>
+            </nav>
+
+        </div>
+    </article>
+
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box reveal">
+                <div>
+                    <p class="eyebrow">Continuer la lecture</p>
+                    <h2>Envie d'explorer les autres articles ?</h2>
+                    <p>
+                        Calcul, matériaux, méthodes de travail, numérique : chaque article
+                        part d'un problème concret et raconte la démarche complète.
+                    </p>
+                </div>
+                <a class="btn" href="articles.html">
+                    Tous les articles
+                    <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tight">
+        <div class="container">
+            <div class="newsletter-box reveal">
+                <div>
+                    <p class="eyebrow">La lettre du dimanche</p>
+                    <h2>Un article utile par mois</h2>
+                    <p>
+                        Une méthode testée, une erreur expliquée, un projet décortiqué.
+                        Le récit honnête de ce que j'apprends.
+                    </p>
+                </div>
+
+                <div>
+                    <form class="newsletter-form"
+                          action="https://formsubmit.co/maglo9501@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="Nouvel abonné à la lettre du dimanche">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off">
+
+                        <label class="sr-only" for="newsletter-email">Votre adresse email</label>
+                        <input id="newsletter-email" type="email" name="email"
+                               placeholder="votre@email.com" required>
+                        <button class="btn" type="submit">
+                            S'abonner
+                            <svg class="i" aria-hidden="true"><use href="#i-mail"></use></svg>
+                        </button>
+                    </form>
+                    <p class="form-note">
+                        Votre adresse sert uniquement à l'envoi de la lettre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     PIED DE PAGE
+     ========================================================= -->
+
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a class="brand" href="index.html">
+                    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="brandGradFoot" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradFoot)"></rect>
+                        <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                            <circle cx="24" cy="24" r="8.4"></circle>
+                            <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                            <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                        </g>
+                    </svg>
+                    <span>
+                        <span class="brand-name">Tchogli <span>Magloire</span></span>
+                        <span class="brand-role">Génie mécanique</span>
+                    </span>
+                </a>
+
+                <p>
+                    Portfolio d'un étudiant en génie mécanique : projets de conception,
+                    articles techniques et ressources pour progresser, de la théorie
+                    à la pièce fabriquée.
+                </p>
+
+                <div class="socials">
+                    <a class="social-btn" href="contact.html"
+                       aria-label="Ouvrir la page contact" title="Page contact">
+                        <svg aria-hidden="true"><use href="#i-message"></use></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="f-col">
+                <h4>Navigation</h4>
+                <ul class="f-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="projets.html">Projets</a></li>
+                    <li><a href="parcours.html">Parcours</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Explorer</h4>
+                <ul class="f-links">
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="articles.html">Tous les articles</a></li>
+                    <li><a href="projets.html">Tous les projets</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Contact</h4>
+                <ul class="f-contact">
+                    <li>
+                        <svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>
+                        <a href="contact.html">Formulaire de contact</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span class="current-year">2026</span> Tchogli Ayéfouni Magloire. Tous droits réservés.</p>
+            <p>Conçu et écrit avec <span class="heart">♥</span> en HTML, CSS et JavaScript.</p>
+        </div>
+
+    </div>
+</footer>
+
+
+<button class="to-top" id="toTop" type="button" aria-label="Revenir en haut de la page" title="Haut de page">
+    <svg class="i" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+    <svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>
+    <span data-toast-text>Copié !</span>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

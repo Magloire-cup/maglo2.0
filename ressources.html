@@ -3,18 +3,962 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ressources et outils utiles pour apprendre la mécanique et la technologie.">
-    <title>Ressources | Tchogli Ayéfouni Magloire</title>
+
+    <title>Ressources pour apprendre la mécanique | Tchogli Ayéfouni Magloire</title>
+
+    <meta name="description"
+          content="Treize ressources gratuites et de confiance pour apprendre la mécanique, la CAO et la programmation : cours, manuels, logiciels et méthodes d'organisation.">
+    <meta name="author" content="Tchogli Ayéfouni Magloire">
+    <meta name="keywords"
+          content="ressources génie mécanique, cours gratuits ingénierie, apprendre la CAO, Python ingénieur, méthode de travail étudiant">
+    <meta name="theme-color" content="#f5f7fb">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Tchogli Ayéfouni Magloire">
+    <meta property="og:title" content="Ressources pour apprendre la mécanique | Tchogli Ayéfouni Magloire">
+    <meta property="og:description"
+          content="Une sélection exigeante de cours, outils et méthodes testés pour progresser en génie mécanique, sans lien sponsorisé.">
+    <meta property="og:image" content="assets/atelier.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
     <link rel="stylesheet" href="style.css">
+
+    <script>
+        /* Applique le thème et l'accent mémorisés avant le premier rendu */
+        (function () {
+            var root = document.documentElement;
+            var theme = "light";
+            var accent = "azur";
+            try {
+                var stored = localStorage.getItem("theme");
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                    theme = "dark";
+                }
+                accent = localStorage.getItem("accent") || "azur";
+            } catch (error) {
+                /* stockage indisponible : valeurs par défaut */
+            }
+            root.setAttribute("data-theme", theme);
+            root.setAttribute("data-accent", accent);
+        })();
+    </script>
+
+    <noscript>
+        <style>
+            .reveal { opacity: 1; transform: none; }
+        </style>
+    </noscript>
 </head>
+
 <body>
-<header class="header"><div class="container nav"><a href="index.html" class="logo">MAGLOIRE</a><nav><a href="index.html">Accueil</a><a href="articles.html">Articles</a><a href="projets.html">Projets</a><a href="parcours.html">Parcours</a><a href="ressources.html" class="active">Ressources</a><a href="contact.html">Contact</a></nav><button id="themeBtn" class="theme-btn" type="button">🌙</button></div></header>
-<main>
-    <section class="page-header"><div class="container"><p class="subtitle">BOÎTE À OUTILS</p><h1>Ressources pour progresser.</h1><p>Une sélection de méthodes, d'outils et de sujets à explorer pour apprendre plus efficacement.</p></div></section>
-    <section class="resources-section"><div class="container"><div class="resources-grid"><article class="resource-card"><span class="resource-icon">📐</span><h2>Conception</h2><p>Commencer par un croquis, identifier les contraintes et documenter chaque choix technique.</p><a href="articles.html">Lire les articles →</a></article><article class="resource-card"><span class="resource-icon">💻</span><h2>Numérique</h2><p>Utiliser le code et les tableurs pour automatiser les calculs répétitifs et visualiser les résultats.</p><a href="projets.html">Voir les projets →</a></article><article class="resource-card"><span class="resource-icon">🧠</span><h2>Apprentissage</h2><p>Réviser avec des questions, des schémas et des exercices reliés à des situations concrètes.</p><a href="article-apprentissage.html">Découvrir la méthode →</a></article><article class="resource-card"><span class="resource-icon">🔧</span><h2>Projet personnel</h2><p>Choisir un problème simple, fabriquer une première version et améliorer grâce aux retours.</p><a href="contact.html">Proposer une idée →</a></article></div></div></section>
-    <section class="cta"><div class="container cta-content"><div><p class="subtitle">À TON TOUR</p><h2>Apprendre devient plus simple quand on construit.</h2><p>Explore le site et garde les idées qui peuvent servir à ton prochain projet.</p></div><a href="parcours.html" class="btn">Voir mon parcours →</a></div></section>
+
+<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- Bibliothèque d'icônes (SVG sprite) -->
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
+     focusable="false" xmlns="http://www.w3.org/2000/svg">
+
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v1.8M12 19.2V21M4.2 4.2l1.3 1.3M18.5 18.5l1.3 1.3M3 12h1.8M19.2 12H21M4.2 19.8l1.3-1.3M18.5 5.5l1.3-1.3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.9A8.6 8.6 0 1 1 11.1 3a6.8 6.8 0 0 0 9.9 9.9Z"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2s6 6.4 6 10.4a6 6 0 0 1-12 0c0-4 6-10.4 6-10.4Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.2"/><path d="M5 15H4.2A1.2 1.2 0 0 1 3 13.8V4.2A1.2 1.2 0 0 1 4.2 3h9.6A1.2 1.2 0 0 1 15 4.2V5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3.5 6.5 8.5 6.2 8.5-6.2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 3 9.8l7.7 3.5 3.5 7.7Z"/><path d="M21.5 2.5 10.7 13.3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 11h17"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.3 13.3 20.6a2 2 0 0 1-2.8 0l-7.1-7.1A2 2 0 0 1 2.8 12V5.2a2 2 0 0 1 2-2h6.8a2 2 0 0 1 1.4.6l7.6 7.5a2 2 0 0 1 0 2Z"/><circle cx="7.6" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18.5 14v4.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="m8.4 10.7 7.2-4.2M8.4 13.3l7.2 4.2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5a4.2 4.2 0 0 0 5.9 0l2.9-2.9a4.2 4.2 0 0 0-5.9-5.9l-1.3 1.3"/><path d="M13.5 10.5a4.2 4.2 0 0 0-5.9 0l-2.9 2.9a4.2 4.2 0 0 0 5.9 5.9l1.3-1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.8"/><path d="M4.8 20.4a7.2 7.2 0 0 1 14.4 0"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s7-6.3 7-11.2a7 7 0 1 0-14 0c0 4.9 7 11.2 7 11.2Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-8.5 8.5H4.5l2.3-3.2A8.5 8.5 0 1 1 20.5 12Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C12 5 10.7 3.6 8.4 3.6H3v13.6h5.4C10.7 17.2 12 18.6 12 20.2"/><path d="M12 6.6c0-1.6 1.3-3 3.6-3H21v13.6h-5.4c-2.3 0-3.6 1.4-3.6 3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.2H7.2A2.2 2.2 0 0 0 5 5.4v13.2a2.2 2.2 0 0 0 2.2 2.2h9.6a2.2 2.2 0 0 0 2.2-2.2V8Z"/><path d="M13.8 3.4V8h5.1"/><path d="M8.5 13h7M8.5 16.5h4.5"/></symbol>
+    <symbol id="i-graduate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4.2-9 4.1 9 4.1 9-4.1Z"/><path d="M7 10.4V15c0 1.4 2.2 2.6 5 2.6s5-1.2 5-2.6v-4.6"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.2" width="18" height="13" rx="2.4"/><path d="M9 7.2V5.4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.8"/><path d="M3.5 12.6h17"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 18h5.6"/><path d="M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.4 10.9c.6.5 1 1.2 1 2h4.8c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 17 5.8-5.8 3.8 3.8L20 8.2"/><path d="M15 8.2h5v5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h18"/><rect x="5" y="11.5" width="3.6" height="6" rx="1.2"/><rect x="10.2" y="7.5" width="3.6" height="10" rx="1.2"/><rect x="15.4" y="13.5" width="3.6" height="4" rx="1.2"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.3v7.4L12 20.9 3.2 15.7V8.3L12 3.1Z"/><path d="M3.5 8.5 12 13.4l8.5-4.9"/><path d="M12 13.4v7.5"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.2 8.8 4.6L12 12.4 3.2 7.8Z"/><path d="m3.2 12.2 8.8 4.6 8.8-4.6"/><path d="m3.2 16.4 8.8 4.6 8.8-4.6"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 15.2 15.2 3.4l5.4 5.4L8.8 20.6Z"/><path d="m7.6 11 2.2 2.2M11 7.6l2.2 2.2M14.4 4.2l2.2 2.2"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8l-4.6 4 4.6 4"/><path d="m15.4 8 4.6 4-4.6 4"/><path d="M13.4 4.8 10.6 19.2"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v5.6L5.7 17a2.4 2.4 0 0 0 2.1 3.6h8.4a2.4 2.4 0 0 0 2.1-3.6L13.5 8.6V3"/><path d="M7.6 14.4h8.8"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="2.2"/><path d="M10.5 2.6v4.4M13.5 2.6v4.4M10.5 17v4.4M13.5 17v4.4M2.6 10.5H7M2.6 13.5H7M17 10.5h4.4M17 13.5h4.4"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2h9.4a2.9 2.9 0 1 0-2.9-2.9"/><path d="M3 15.8h13.4a2.9 2.9 0 1 1-2.9 2.9"/><path d="M3 12h16.4a2.9 2.9 0 1 0-2.9-2.9"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5.2 5.8v6.1c0 4.3 2.9 7.9 6.8 9.4 3.9-1.5 6.8-5.1 6.8-9.4V5.8Z"/><path d="m9.4 11.9 2 2 3.2-3.4"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11.5 3.8 1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6Z"/><path d="m18 15.4.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12a8.6 8.6 0 1 1-2.6-6.2"/><path d="M20.8 3.6v5h-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10.2 8.6 5.6 3.4-5.6 3.4Z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3Z"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.2" rx="7.4" ry="3.2"/><path d="M4.6 6.2v11.6c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2V6.2"/><path d="M4.6 12c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2.4 4.8 13.6h6l-1.2 8 8.6-11.2h-6Z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 4.4l4 4L8.8 19.2H4.8v-4Z"/><path d="m13.6 6.4 4 4"/></symbol>
+    <symbol id="i-nut" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 20 7.8v8.4l-8 4.6-8-4.6V7.8Z"/><circle cx="12" cy="12" r="3.1"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.4"/><path d="M12 2.2v3.4M12 18.4v3.4M3.4 5.6 6 8.2M18 15.8l2.6 2.6M2.2 12h3.4M18.4 12h3.4M3.4 18.4 6 15.8M18 8.2l2.6-2.6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6.2 6.4 12 6.4 21.5 12 21.5 12 17.8 17.6 12 17.6 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5.4"/><path d="m8.6 13.8-1.4 7 4.8-2.8 4.8 2.8-1.4-7"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.4S3.6 15.4 3.6 9.8a4.7 4.7 0 0 1 8.4-3 4.7 4.7 0 0 1 8.4 3c0 5.6-8.4 10.6-8.4 10.6Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+
+<!-- =========================================================
+     EN-TÊTE
+     ========================================================= -->
+
+<header class="site-header">
+    <div class="container nav-bar">
+
+        <a class="brand" href="index.html" aria-label="Accueil, Tchogli Ayéfouni Magloire">
+            <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <defs>
+                    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                    </linearGradient>
+                </defs>
+                <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGrad)"></rect>
+                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                    <circle cx="24" cy="24" r="8.4"></circle>
+                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                </g>
+            </svg>
+            <span>
+                <span class="brand-name">Tchogli <span>Magloire</span></span>
+                <span class="brand-role">Génie mécanique</span>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a class="nav-link" href="index.html">Accueil</a>
+            <a class="nav-link" href="articles.html">Articles</a>
+            <a class="nav-link" href="projets.html">Projets</a>
+            <a class="nav-link" href="parcours.html">Parcours</a>
+            <a class="nav-link active" href="ressources.html" aria-current="page">Ressources</a>
+            <a class="nav-link" href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="accent-wrap" id="accentWrap">
+                <button class="icon-btn" id="accentBtn" type="button"
+                        aria-expanded="false" aria-haspopup="true"
+                        aria-label="Changer la couleur d'accent" title="Couleur d'accent">
+                    <svg class="i" aria-hidden="true"><use href="#i-droplet"></use></svg>
+                </button>
+
+                <div class="accent-pop" id="accentPop" role="dialog" aria-label="Couleur d'accent">
+                    <span class="accent-pop-title">Couleur d'accent</span>
+                    <div class="accent-list">
+                        <button class="accent-swatch" type="button" data-accent="azur"
+                                aria-label="Accent azur" title="Azur"></button>
+                        <button class="accent-swatch" type="button" data-accent="ambre"
+                                aria-label="Accent ambre" title="Ambre"></button>
+                        <button class="accent-swatch" type="button" data-accent="emeraude"
+                                aria-label="Accent émeraude" title="Émeraude"></button>
+                        <button class="accent-swatch" type="button" data-accent="violet"
+                                aria-label="Accent violet" title="Violet"></button>
+                    </div>
+                    <p class="accent-pop-note">
+                        L'accent colore tout le site et reste mémorisé sur cet appareil.
+                    </p>
+                </div>
+            </div>
+
+            <button class="icon-btn" type="button" data-theme-toggle
+                    aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                    title="Passer en thème sombre">
+                <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+            </button>
+
+            <a class="btn sm nav-cta" href="contact.html">Me contacter</a>
+
+            <button class="burger" id="menuBtn" type="button"
+                    aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobilePanel">
+                <span></span>
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+
+<!-- MENU MOBILE -->
+
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+    <div class="mobile-overlay"></div>
+
+    <aside class="mobile-drawer" role="dialog" aria-label="Menu de navigation">
+
+        <div class="mobile-head">
+            <span class="brand">
+                <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="brandGradMenu" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" style="stop-color:var(--primary)"></stop>
+                            <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                        </linearGradient>
+                    </defs>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradMenu)"></rect>
+                    <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                        <circle cx="24" cy="24" r="8.4"></circle>
+                        <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    </g>
+                </svg>
+                <span>
+                    <span class="brand-name">Tchogli <span>Magloire</span></span>
+                    <span class="brand-role">Génie mécanique</span>
+                </span>
+            </span>
+
+            <button class="icon-btn" id="mobileClose" type="button" aria-label="Fermer le menu">
+                <svg class="i" aria-hidden="true"><use href="#i-close"></use></svg>
+            </button>
+        </div>
+
+        <nav class="m-nav" aria-label="Navigation mobile">
+            <a href="index.html">Accueil <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="articles.html">Articles <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="projets.html">Projets <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="parcours.html">Parcours <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a class="active" href="ressources.html">Ressources <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="contact.html">Contact <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+        </nav>
+
+        <p class="mobile-label">Apparence</p>
+
+        <div class="m-options">
+            <div class="m-option-row">
+                <span>Thème sombre</span>
+                <button class="icon-btn" type="button" data-theme-toggle
+                        aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                        title="Passer en thème sombre">
+                    <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                    <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+                </button>
+            </div>
+
+            <div class="m-option-row">
+                <span>Couleur</span>
+                <div class="accent-list">
+                    <button class="accent-swatch" type="button" data-accent="azur"
+                            aria-label="Accent azur" title="Azur"></button>
+                    <button class="accent-swatch" type="button" data-accent="ambre"
+                            aria-label="Accent ambre" title="Ambre"></button>
+                    <button class="accent-swatch" type="button" data-accent="emeraude"
+                            aria-label="Accent émeraude" title="Émeraude"></button>
+                    <button class="accent-swatch" type="button" data-accent="violet"
+                            aria-label="Accent violet" title="Violet"></button>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn block m-cta" href="contact.html">
+            Écrire un message
+            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+        </a>
+
+    </aside>
+</div>
+
+
+<main id="contenu">
+
+    <!-- =========================================================
+         EN-TÊTE DE PAGE
+         ========================================================= -->
+
+    <section class="page-hero">
+        <div class="container page-hero-inner">
+
+            <p class="eyebrow">Boîte à outils</p>
+
+            <h1>Les ressources qui m'ont vraiment fait progresser.</h1>
+
+            <p class="lead">
+                Pas de liste interminable : une sélection resserrée de cours, d'outils
+                et de méthodes que j'utilise réellement. <strong>Aucun lien sponsorisé</strong>,
+                aucun contenu payant déguisé, seulement ce que je recommanderais
+                à un camarade de promotion.
+            </p>
+
+            <div class="chip-bar" role="group" aria-label="Filtrer les ressources par usage">
+                <button class="chip active" type="button" data-filter="all">Toutes les ressources</button>
+                <button class="chip" type="button" data-filter="apprendre">Apprendre</button>
+                <button class="chip" type="button" data-filter="outils">Outils numériques</button>
+                <button class="chip" type="button" data-filter="methode">Méthode</button>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         SÉLECTION DE RESSOURCES
+         ========================================================= -->
+
+    <section class="section tight">
+        <div class="container">
+
+            <div class="toolbar">
+                <p class="results-count" id="resultsCount" aria-live="polite">13 ressources affichées</p>
+
+                <div class="search-box">
+                    <svg class="i" aria-hidden="true"><use href="#i-search"></use></svg>
+                    <label class="sr-only" for="search">Rechercher une ressource</label>
+                    <input id="search" type="search"
+                           placeholder="Rechercher… (touche /)"
+                           autocomplete="off">
+                </div>
+            </div>
+
+            <div class="articles-grid" id="filterGrid">
+
+                <article class="resource-card reveal"
+                         data-category="apprendre"
+                         data-title="MIT OpenCourseWare : cours d'ingénierie en accès libre">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-graduate"></use></svg></div>
+                    <h3>MIT OpenCourseWare</h3>
+                    <p>
+                        Les cours du MIT publiés gratuitement : mécanique des solides,
+                        dynamique, matériaux. Exigeant et en anglais, parfait pour
+                        approfondir un chapitre mal compris plutôt que pour réviser
+                        la veille d'un examen.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        ocw.mit.edu
+                    </span>
+                    <a class="res-link" href="https://ocw.mit.edu" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.06s"
+                         data-category="apprendre"
+                         data-title="Khan Academy : mathématiques et physique en français">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-chart"></use></svg></div>
+                    <h3>Khan Academy (français)</h3>
+                    <p>
+                        Cours et exercices progressifs en français, du lycée aux
+                        premières années universitaires. Mon réflexe quand une base
+                        mathématique bloque un calcul de résistance des matériaux.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        fr.khanacademy.org
+                    </span>
+                    <a class="res-link" href="https://fr.khanacademy.org" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.12s"
+                         data-category="apprendre"
+                         data-title="OpenStax : manuels universitaires gratuits">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-book"></use></svg></div>
+                    <h3>OpenStax</h3>
+                    <p>
+                        Des manuels universitaires gratuits et rigoureux, notamment en
+                        physique et en mathématiques appliquées. Utile pour vérifier
+                        une formule ou travailler un chapitre en profondeur, en anglais.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        openstax.org
+                    </span>
+                    <a class="res-link" href="https://openstax.org" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.18s"
+                         data-category="apprendre"
+                         data-title="Coursera : cours d'ingénierie et de CAO">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-play"></use></svg></div>
+                    <h3>Coursera</h3>
+                    <p>
+                        Des cours universitaires structurés, avec évaluations. Certains
+                        sont consultables gratuitement en mode « audit » : idéal pour
+                        découvrir un domaine (CAO, matériaux, gestion de projet) avant
+                        d'investir davantage.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        coursera.org
+                    </span>
+                    <a class="res-link" href="https://www.coursera.org" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.24s"
+                         data-category="apprendre methode"
+                         data-title="Anki : réviser par répétition espacée">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-refresh"></use></svg></div>
+                    <h3>Anki</h3>
+                    <p>
+                        Révision par répétition espacée : les notions fragiles reviennent
+                        au bon moment pour être ancrées. Je l'utilise pour les formules
+                        et le vocabulaire technique, pas pour remplacer la pratique.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        apps.ankiweb.net
+                    </span>
+                    <a class="res-link" href="https://apps.ankiweb.net" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.3s"
+                         data-category="outils"
+                         data-title="GrabCAD : bibliothèque de modèles 3D">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-cube"></use></svg></div>
+                    <h3>GrabCAD</h3>
+                    <p>
+                        Bibliothèque de modèles 3D partagés par la communauté : vis,
+                        roulements, composants standard. Très pratique pour tester un
+                        assemblage sans modéliser chaque pièce à la main.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        grabcad.com
+                    </span>
+                    <a class="res-link" href="https://grabcad.com" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.36s"
+                         data-category="outils"
+                         data-title="Autodesk : logiciels de CAO et ressources d'apprentissage">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-ruler"></use></svg></div>
+                    <h3>Autodesk</h3>
+                    <p>
+                        Éditeur de logiciels de CAO et de conception. La documentation et
+                        les parcours d'apprentissage officiels sont une référence pour
+                        progresser sur les fonctions avancées, avec des licences
+                        étudiantes.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        autodesk.com
+                    </span>
+                    <a class="res-link" href="https://www.autodesk.com" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.42s"
+                         data-category="outils"
+                         data-title="freeCodeCamp : apprendre à programmer en pratiquant">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-code"></use></svg></div>
+                    <h3>freeCodeCamp</h3>
+                    <p>
+                        Apprentissage de la programmation par la pratique, avec des
+                        projets à construire. C'est là que j'ai consolidé mes bases en
+                        Python avant d'écrire mon calculateur de dimensionnement.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        freecodecamp.org
+                    </span>
+                    <a class="res-link" href="https://www.freecodecamp.org" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.48s"
+                         data-category="outils"
+                         data-title="MDN Web Docs : référence HTML, CSS et JavaScript en français">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg></div>
+                    <h3>MDN Web Docs (français)</h3>
+                    <p>
+                        La référence pour le web, partiellement traduite en français.
+                        C'est la documentation que j'ai consultée pour concevoir et
+                        coder ce portfolio correctement, plutôt que par tâtonnements.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        developer.mozilla.org
+                    </span>
+                    <a class="res-link" href="https://developer.mozilla.org/fr/" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.54s"
+                         data-category="outils"
+                         data-title="Python : documentation officielle du langage">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-database"></use></svg></div>
+                    <h3>Python.org</h3>
+                    <p>
+                        Le site officiel du langage : téléchargement, documentation et
+                        tutoriel officiel. La ressource de départ la plus fiable pour
+                        automatiser des calculs d'ingénierie sans dépendre d'un cours
+                        approximatif.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        python.org
+                    </span>
+                    <a class="res-link" href="https://www.python.org" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.6s"
+                         data-category="outils"
+                         data-title="Visual Studio Code : éditeur de code gratuit">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-pen"></use></svg></div>
+                    <h3>Visual Studio Code</h3>
+                    <p>
+                        Éditeur de code gratuit, léger et extensible. Je l'utilise pour
+                        écrire mes scripts Python et coder ce site : coloration
+                        syntaxique, détection d'erreurs et extensions utiles.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        code.visualstudio.com
+                    </span>
+                    <a class="res-link" href="https://code.visualstudio.com" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.66s"
+                         data-category="outils methode"
+                         data-title="Git : versionner ses fichiers de projet">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-layers"></use></svg></div>
+                    <h3>Git</h3>
+                    <p>
+                        Système de versionnage : garder l'historique de chaque
+                        modification, revenir en arrière sans rien perdre et comprendre
+                        ce qui a changé entre deux versions d'un projet.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        git-scm.com
+                    </span>
+                    <a class="res-link" href="https://git-scm.com" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+                <article class="resource-card reveal" style="--d:0.72s"
+                         data-category="methode"
+                         data-title="Notion : carnet de notes et suivi de projets">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-file"></use></svg></div>
+                    <h3>Notion</h3>
+                    <p>
+                        Notes structurées, suivi de tâches et tableaux de bord de
+                        projet dans un seul espace. C'est mon carnet de bord : ce qui
+                        n'y est pas écrit n'existe pas.
+                    </p>
+                    <span class="res-host">
+                        <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                        notion.so
+                    </span>
+                    <a class="res-link" href="https://www.notion.so" target="_blank" rel="noopener noreferrer">
+                        Ouvrir le site
+                        <svg class="i" aria-hidden="true"><use href="#i-external"></use></svg>
+                    </a>
+                </article>
+
+            </div>
+
+            <div class="empty-state" id="noResults" hidden>
+                <svg class="i" aria-hidden="true"><use href="#i-search"></use></svg>
+                <strong>Aucune ressource ne correspond à cette recherche</strong>
+                Essayez un autre mot-clé, ou revenez au filtre
+                « Toutes les ressources » pour retrouver la sélection complète.
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         MÉTHODES MAISON
+         ========================================================= -->
+
+    <section class="section alt">
+        <div class="container">
+
+            <div class="section-head split reveal">
+                <div>
+                    <p class="eyebrow">Méthodes maison</p>
+                    <h2>Ce que j'ai écrit pour aller plus vite</h2>
+                </div>
+                <a class="btn ghost" href="articles.html">
+                    Tous les articles
+                    <svg class="i" aria-hidden="true"><use href="#i-book"></use></svg>
+                </a>
+            </div>
+
+            <div class="grid grid-3">
+
+                <article class="card reveal">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-lightbulb"></use></svg></div>
+                    <h3>Structurer ses révisions</h3>
+                    <p>
+                        Une méthode en quatre étapes pour réviser la mécanique sans
+                        relire passivement : questions, schémas, exercices reliés à
+                        des cas concrets.
+                    </p>
+                    <span class="card-tag">Article · 4 min</span>
+                    <p><a class="text-link" href="article-apprentissage.html">Lire l'article →</a></p>
+                </article>
+
+                <article class="card reveal" style="--d:0.08s">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-code"></use></svg></div>
+                    <h3>Automatiser ses calculs avec Python</h3>
+                    <p>
+                        Passer des feuilles de calcul copiées-collées à un script
+                        fiable : variables, vérifications et compte rendu généré
+                        automatiquement.
+                    </p>
+                    <span class="card-tag">Article · 5 min</span>
+                    <p><a class="text-link" href="article-programmation.html">Lire l'article →</a></p>
+                </article>
+
+                <article class="card reveal" style="--d:0.16s">
+                    <div class="icon-tile"><svg class="i" aria-hidden="true"><use href="#i-cube"></use></svg></div>
+                    <h3>Bien démarrer en CAO</h3>
+                    <p>
+                        Du croquis papier au modèle 3D propre : comment organiser son
+                        arbre de construction et éviter le modèle impossible à
+                        modifier trois semaines plus tard.
+                    </p>
+                    <span class="card-tag">Article · 7 min</span>
+                    <p><a class="text-link" href="article-cao.html">Lire l'article →</a></p>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         MODE D'EMPLOI
+         ========================================================= -->
+
+    <section class="section">
+        <div class="container">
+
+            <div class="section-head center reveal">
+                <p class="eyebrow">Mode d'emploi</p>
+                <h2>Comment utiliser ces ressources sans se disperser</h2>
+                <p>
+                    Le piège n'est pas le manque de contenu, c'est l'accumulation.
+                    Voici la démarche que j'applique.
+                </p>
+            </div>
+
+            <div class="steps">
+                <div class="step reveal">
+                    <h3>Choisir une seule ressource</h3>
+                    <p>
+                        Une par compétence, pas cinq. Un cours suivi jusqu'au bout
+                        vaut mieux que dix cours commencés avec enthousiasme.
+                    </p>
+                </div>
+                <div class="step reveal" style="--d:0.08s">
+                    <h3>L'appliquer immédiatement</h3>
+                    <p>
+                        Chaque notion apprise est testée sur l'un de mes projets en
+                        cours : c'est le passage à la pratique qui fixe les
+                        connaissances.
+                    </p>
+                </div>
+                <div class="step reveal" style="--d:0.16s">
+                    <h3>Prendre des notes réutilisables</h3>
+                    <p>
+                        Pas de recopie : des fiches courtes avec la formule, l'hypothèse
+                        et un exemple chiffré. Rédigées une fois, relues en dix secondes.
+                    </p>
+                </div>
+                <div class="step reveal" style="--d:0.24s">
+                    <h3>Réviser à intervalles</h3>
+                    <p>
+                        Quelques minutes par semaine valent mieux qu'une nuit blanche
+                        avant l'examen. La régularité bat l'intensité.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         FAQ
+         ========================================================= -->
+
+    <section class="section alt">
+        <div class="container">
+
+            <div class="section-head center reveal">
+                <p class="eyebrow">Questions fréquentes</p>
+                <h2>À propos de cette sélection</h2>
+                <p>Transparence complète sur la façon dont ces ressources sont choisies.</p>
+            </div>
+
+            <div class="faq">
+
+                <details class="faq-item reveal">
+                    <summary>Ces liens sont-ils sponsorisés&nbsp;?</summary>
+                    <div class="faq-body">
+                        <p>
+                            Non. Aucun lien de cette page n'est affilié ou sponsorisé.
+                            Je recommande uniquement des ressources gratuites ou
+                            accessibles, que j'utilise personnellement dans mes études.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="faq-item reveal" style="--d:0.06s">
+                    <summary>Pourquoi si peu de ressources&nbsp;?</summary>
+                    <div class="faq-body">
+                        <p>
+                            Parce qu'une liste trop longue décourage. Mieux vaut treize
+                            ressources réellement utilisées qu'un annuaire de cent liens
+                            jamais ouverts. La page évoluera au fur et à mesure de mes
+                            découvertes.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="faq-item reveal" style="--d:0.12s">
+                    <summary>Tout est-il en français&nbsp;?</summary>
+                    <div class="faq-body">
+                        <p>
+                            Non, et je le signale à chaque fois. Certaines ressources
+                            majeures (MIT, OpenStax) sont en anglais : c'est un effort
+                            supplémentaire, mais aussi une compétence utile à tout
+                            futur ingénieur.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="faq-item reveal" style="--d:0.18s">
+                    <summary>Puis-je proposer une ressource à ajouter&nbsp;?</summary>
+                    <div class="faq-body">
+                        <p>
+                            Avec plaisir, surtout si vous l'avez testée en conditions
+                            réelles. Écrivez-moi via la page
+                            <a href="contact.html">Contact</a> en précisant le lien et
+                            ce qu'elle vous a apporté.
+                        </p>
+                    </div>
+                </details>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================================================
+         APPEL À L'ACTION
+         ========================================================= -->
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box reveal">
+                <div>
+                    <p class="eyebrow">Aller plus loin</p>
+                    <h2>Une ressource vous a manqué ?</h2>
+                    <p>
+                        Si vous cherchez quelque chose de précis (un cours, un outil,
+                        une explication), dites-le moi : je vous orienterai vers ce
+                        que je connais, et je l'ajouterai à cette page.
+                    </p>
+                </div>
+                <a class="btn" href="contact.html">
+                    Écrire un message
+                    <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tight">
+        <div class="container">
+            <div class="newsletter-box reveal">
+                <div>
+                    <p class="eyebrow">La lettre du dimanche</p>
+                    <h2>Une ressource utile par mois, jamais plus</h2>
+                    <p>
+                        Un lien testé, une méthode courte, une leçon apprise.
+                        L'inverse du spam : court, utile, et sans culpabilisation.
+                    </p>
+                </div>
+
+                <div>
+                    <form class="newsletter-form"
+                          action="https://formsubmit.co/maglo9501@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="Nouvel abonné à la lettre du dimanche">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off">
+
+                        <label class="sr-only" for="newsletter-email">Votre adresse email</label>
+                        <input id="newsletter-email" type="email" name="email"
+                               placeholder="votre@email.com" required>
+                        <button class="btn" type="submit">
+                            S'abonner
+                            <svg class="i" aria-hidden="true"><use href="#i-mail"></use></svg>
+                        </button>
+                    </form>
+                    <p class="form-note">
+                        Votre adresse sert uniquement à l'envoi de la lettre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </main>
-<footer><div class="container footer-content"><p>Tchogli Ayéfouni Magloire<br>Étudiant en Génie Mécanique</p><div class="footer-links"><a href="index.html">Accueil</a><a href="articles.html">Articles</a><a href="projets.html">Projets</a><a href="parcours.html">Parcours</a><a href="ressources.html">Ressources</a><a href="contact.html">Contact</a></div></div><div class="footer-bottom"><p>© <span class="current-year">2026</span> Tous droits réservés.</p></div></footer>
+
+
+<!-- =========================================================
+     PIED DE PAGE
+     ========================================================= -->
+
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a class="brand" href="index.html">
+                    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="brandGradFoot" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradFoot)"></rect>
+                        <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                            <circle cx="24" cy="24" r="8.4"></circle>
+                            <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                            <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                        </g>
+                    </svg>
+                    <span>
+                        <span class="brand-name">Tchogli <span>Magloire</span></span>
+                        <span class="brand-role">Génie mécanique</span>
+                    </span>
+                </a>
+
+                <p>
+                    Portfolio d'un étudiant en génie mécanique : projets de conception,
+                    articles techniques et ressources pour progresser, de la théorie
+                    à la pièce fabriquée.
+                </p>
+
+                <div class="socials">
+                    <a class="social-btn" href="contact.html"
+                       aria-label="Ouvrir la page contact" title="Page contact">
+                        <svg aria-hidden="true"><use href="#i-message"></use></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="f-col">
+                <h4>Navigation</h4>
+                <ul class="f-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="projets.html">Projets</a></li>
+                    <li><a href="parcours.html">Parcours</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Explorer</h4>
+                <ul class="f-links">
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="articles.html">Tous les articles</a></li>
+                    <li><a href="projets.html">Tous les projets</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Contact</h4>
+                <ul class="f-contact">
+                    <li>
+                        <svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>
+                        <a href="contact.html">Formulaire de contact</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span class="current-year">2026</span> Tchogli Ayéfouni Magloire. Tous droits réservés.</p>
+            <p>Conçu et écrit avec <span class="heart">♥</span> en HTML, CSS et JavaScript.</p>
+        </div>
+
+    </div>
+</footer>
+
+
+<button class="to-top" id="toTop" type="button" aria-label="Revenir en haut de la page" title="Haut de page">
+    <svg class="i" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+    <svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>
+    <span data-toast-text>Copié !</span>
+</div>
+
+
 <script src="script.js"></script>
+
 </body>
 </html>

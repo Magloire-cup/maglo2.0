@@ -3,46 +3,834 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pourquoi choisir le génie mécanique et quelles compétences développer.">
-    <title>Pourquoi choisir le génie mécanique ? | Magloire</title>
+
+    <title>Comment un arbre transmet-il un couple ? | Tchogli Ayéfouni Magloire</title>
+
+    <meta name="description"
+          content="Du moteur à la charge : comment un arbre de transmission reprend un couple, quelles contraintes le sollicitent et comment le dimensionner sans se tromper.">
+    <meta name="author" content="Tchogli Ayéfouni Magloire">
+    <meta name="keywords"
+          content="arbre de transmission, couple, torsion, dimensionnement, clavette, fatigue, concentration de contraintes, génie mécanique">
+    <meta name="theme-color" content="#f5f7fb">
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Tchogli Ayéfouni Magloire">
+    <meta property="og:title" content="Comment un arbre transmet-il un couple ?">
+    <meta property="og:description"
+          content="Un arbre n'est pas un simple tube qui tourne : c'est un organe dimensionné pour reprendre torsion, flexion et fatigue pendant des milliers d'heures.">
+    <meta property="og:image" content="assets/article-mecanique.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
     <link rel="stylesheet" href="style.css">
+
+    <script>
+        /* Applique le thème et l'accent mémorisés avant le premier rendu */
+        (function () {
+            var root = document.documentElement;
+            var theme = "light";
+            var accent = "azur";
+            try {
+                var stored = localStorage.getItem("theme");
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                    theme = "dark";
+                }
+                accent = localStorage.getItem("accent") || "azur";
+            } catch (error) {
+                /* stockage indisponible : valeurs par défaut */
+            }
+            root.setAttribute("data-theme", theme);
+            root.setAttribute("data-accent", accent);
+        })();
+    </script>
+
+    <noscript>
+        <style>
+            .reveal { opacity: 1; transform: none; }
+        </style>
+    </noscript>
 </head>
+
 <body>
-<header class="header">
-    <div class="container nav">
-        <a href="index.html" class="logo">MAGLOIRE</a>
-        <nav>
-            <a href="index.html">Accueil</a>
-            <a href="articles.html" class="active">Articles</a>
-            <a href="projets.html">Projets</a>
-            <a href="parcours.html">Parcours</a>
-            <a href="ressources.html">Ressources</a>
-            <a href="contact.html">Contact</a>
+
+<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+<div class="read-progress" aria-hidden="true"></div>
+
+<!-- Bibliothèque d'icônes (SVG sprite) -->
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
+     focusable="false" xmlns="http://www.w3.org/2000/svg">
+
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v1.8M12 19.2V21M4.2 4.2l1.3 1.3M18.5 18.5l1.3 1.3M3 12h1.8M19.2 12H21M4.2 19.8l1.3-1.3M18.5 5.5l1.3-1.3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.9A8.6 8.6 0 1 1 11.1 3a6.8 6.8 0 0 0 9.9 9.9Z"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2s6 6.4 6 10.4a6 6 0 0 1-12 0c0-4 6-10.4 6-10.4Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.2"/><path d="M5 15H4.2A1.2 1.2 0 0 1 3 13.8V4.2A1.2 1.2 0 0 1 4.2 3h9.6A1.2 1.2 0 0 1 15 4.2V5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3.5 6.5 8.5 6.2 8.5-6.2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 3 9.8l7.7 3.5 3.5 7.7Z"/><path d="M21.5 2.5 10.7 13.3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 11h17"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.3 13.3 20.6a2 2 0 0 1-2.8 0l-7.1-7.1A2 2 0 0 1 2.8 12V5.2a2 2 0 0 1 2-2h6.8a2 2 0 0 1 1.4.6l7.6 7.5a2 2 0 0 1 0 2Z"/><circle cx="7.6" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18.5 14v4.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="m8.4 10.7 7.2-4.2M8.4 13.3l7.2 4.2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5a4.2 4.2 0 0 0 5.9 0l2.9-2.9a4.2 4.2 0 0 0-5.9-5.9l-1.3 1.3"/><path d="M13.5 10.5a4.2 4.2 0 0 0-5.9 0l-2.9 2.9a4.2 4.2 0 0 0 5.9 5.9l1.3-1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.8"/><path d="M4.8 20.4a7.2 7.2 0 0 1 14.4 0"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s7-6.3 7-11.2a7 7 0 1 0-14 0c0 4.9 7 11.2 7 11.2Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-8.5 8.5H4.5l2.3-3.2A8.5 8.5 0 1 1 20.5 12Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C12 5 10.7 3.6 8.4 3.6H3v13.6h5.4C10.7 17.2 12 18.6 12 20.2"/><path d="M12 6.6c0-1.6 1.3-3 3.6-3H21v13.6h-5.4c-2.3 0-3.6 1.4-3.6 3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.2H7.2A2.2 2.2 0 0 0 5 5.4v13.2a2.2 2.2 0 0 0 2.2 2.2h9.6a2.2 2.2 0 0 0 2.2-2.2V8Z"/><path d="M13.8 3.4V8h5.1"/><path d="M8.5 13h7M8.5 16.5h4.5"/></symbol>
+    <symbol id="i-graduate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4.2-9 4.1 9 4.1 9-4.1Z"/><path d="M7 10.4V15c0 1.4 2.2 2.6 5 2.6s5-1.2 5-2.6v-4.6"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.2" width="18" height="13" rx="2.4"/><path d="M9 7.2V5.4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.8"/><path d="M3.5 12.6h17"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 18h5.6"/><path d="M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.4 10.9c.6.5 1 1.2 1 2h4.8c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 17 5.8-5.8 3.8 3.8L20 8.2"/><path d="M15 8.2h5v5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h18"/><rect x="5" y="11.5" width="3.6" height="6" rx="1.2"/><rect x="10.2" y="7.5" width="3.6" height="10" rx="1.2"/><rect x="15.4" y="13.5" width="3.6" height="4" rx="1.2"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.3v7.4L12 20.9 3.2 15.7V8.3L12 3.1Z"/><path d="M3.5 8.5 12 13.4l8.5-4.9"/><path d="M12 13.4v7.5"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.2 8.8 4.6L12 12.4 3.2 7.8Z"/><path d="m3.2 12.2 8.8 4.6 8.8-4.6"/><path d="m3.2 16.4 8.8 4.6 8.8-4.6"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 15.2 15.2 3.4l5.4 5.4L8.8 20.6Z"/><path d="m7.6 11 2.2 2.2M11 7.6l2.2 2.2M14.4 4.2l2.2 2.2"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8l-4.6 4 4.6 4"/><path d="m15.4 8 4.6 4-4.6 4"/><path d="M13.4 4.8 10.6 19.2"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v5.6L5.7 17a2.4 2.4 0 0 0 2.1 3.6h8.4a2.4 2.4 0 0 0 2.1-3.6L13.5 8.6V3"/><path d="M7.6 14.4h8.8"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="2.2"/><path d="M10.5 2.6v4.4M13.5 2.6v4.4M10.5 17v4.4M13.5 17v4.4M2.6 10.5H7M2.6 13.5H7M17 10.5h4.4M17 13.5h4.4"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2h9.4a2.9 2.9 0 1 0-2.9-2.9"/><path d="M3 15.8h13.4a2.9 2.9 0 1 1-2.9 2.9"/><path d="M3 12h16.4a2.9 2.9 0 1 0-2.9-2.9"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5.2 5.8v6.1c0 4.3 2.9 7.9 6.8 9.4 3.9-1.5 6.8-5.1 6.8-9.4V5.8Z"/><path d="m9.4 11.9 2 2 3.2-3.4"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11.5 3.8 1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6Z"/><path d="m18 15.4.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12a8.6 8.6 0 1 1-2.6-6.2"/><path d="M20.8 3.6v5h-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10.2 8.6 5.6 3.4-5.6 3.4Z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3Z"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.2" rx="7.4" ry="3.2"/><path d="M4.6 6.2v11.6c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2V6.2"/><path d="M4.6 12c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2.4 4.8 13.6h6l-1.2 8 8.6-11.2h-6Z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 4.4l4 4L8.8 19.2H4.8v-4Z"/><path d="m13.6 6.4 4 4"/></symbol>
+    <symbol id="i-nut" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 20 7.8v8.4l-8 4.6-8-4.6V7.8Z"/><circle cx="12" cy="12" r="3.1"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.4"/><path d="M12 2.2v3.4M12 18.4v3.4M3.4 5.6 6 8.2M18 15.8l2.6 2.6M2.2 12h3.4M18.4 12h3.4M3.4 18.4 6 15.8M18 8.2l2.6-2.6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6.2 6.4 12 6.4 21.5 12 21.5 12 17.8 17.6 12 17.6 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5.4"/><path d="m8.6 13.8-1.4 7 4.8-2.8 4.8 2.8-1.4-7"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.4S3.6 15.4 3.6 9.8a4.7 4.7 0 0 1 8.4-3 4.7 4.7 0 0 1 8.4 3c0 5.6-8.4 10.6-8.4 10.6Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+
+<!-- =========================================================
+     EN-TÊTE
+     ========================================================= -->
+
+<header class="site-header">
+    <div class="container nav-bar">
+
+        <a class="brand" href="index.html" aria-label="Accueil, Tchogli Ayéfouni Magloire">
+            <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <defs>
+                    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                    </linearGradient>
+                </defs>
+                <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGrad)"></rect>
+                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                    <circle cx="24" cy="24" r="8.4"></circle>
+                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                </g>
+            </svg>
+            <span>
+                <span class="brand-name">Tchogli <span>Magloire</span></span>
+                <span class="brand-role">Génie mécanique</span>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a class="nav-link" href="index.html">Accueil</a>
+            <a class="nav-link active" href="articles.html" aria-current="page">Articles</a>
+            <a class="nav-link" href="projets.html">Projets</a>
+            <a class="nav-link" href="parcours.html">Parcours</a>
+            <a class="nav-link" href="ressources.html">Ressources</a>
+            <a class="nav-link" href="contact.html">Contact</a>
         </nav>
-        <button id="themeBtn" class="theme-btn" type="button">🌙</button>
+
+        <div class="nav-actions">
+
+            <div class="accent-wrap" id="accentWrap">
+                <button class="icon-btn" id="accentBtn" type="button"
+                        aria-expanded="false" aria-haspopup="true"
+                        aria-label="Changer la couleur d'accent" title="Couleur d'accent">
+                    <svg class="i" aria-hidden="true"><use href="#i-droplet"></use></svg>
+                </button>
+
+                <div class="accent-pop" id="accentPop" role="dialog" aria-label="Couleur d'accent">
+                    <span class="accent-pop-title">Couleur d'accent</span>
+                    <div class="accent-list">
+                        <button class="accent-swatch" type="button" data-accent="azur"
+                                aria-label="Accent azur" title="Azur"></button>
+                        <button class="accent-swatch" type="button" data-accent="ambre"
+                                aria-label="Accent ambre" title="Ambre"></button>
+                        <button class="accent-swatch" type="button" data-accent="emeraude"
+                                aria-label="Accent émeraude" title="Émeraude"></button>
+                        <button class="accent-swatch" type="button" data-accent="violet"
+                                aria-label="Accent violet" title="Violet"></button>
+                    </div>
+                    <p class="accent-pop-note">
+                        L'accent colore tout le site et reste mémorisé sur cet appareil.
+                    </p>
+                </div>
+            </div>
+
+            <button class="icon-btn" type="button" data-theme-toggle
+                    aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                    title="Passer en thème sombre">
+                <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+            </button>
+
+            <a class="btn sm nav-cta" href="contact.html">Me contacter</a>
+
+            <button class="burger" id="menuBtn" type="button"
+                    aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobilePanel">
+                <span></span>
+            </button>
+
+        </div>
+
     </div>
 </header>
-<main>
-    <article class="article-page">
-        <div class="container article-page-inner">
-            <a class="back-link" href="articles.html">← Retour aux articles</a>
-            <p class="subtitle">GÉNIE MÉCANIQUE · 21 SEPTEMBRE 2026</p>
-            <h1>Pourquoi choisir le génie mécanique ?</h1>
-            <p class="article-lead">Le génie mécanique relie les sciences, la matière et les besoins concrets pour transformer une idée en système utile.</p>
-            <div class="article-body">
-                <h2>Une discipline au cœur de l'industrie</h2>
-                <p>Un mécanicien ne travaille pas uniquement sur des pièces. Il cherche à comprendre comment un système se déforme, transmet un effort, consomme de l'énergie et peut être fabriqué de manière fiable. Cette vision globale intervient dans le transport, l'énergie, l'agriculture, la production et la maintenance.</p>
-                <h2>Apprendre à raisonner</h2>
-                <p>La formation développe une méthode : observer le besoin, poser des hypothèses, modéliser le comportement, calculer les dimensions et vérifier les résultats. Les mathématiques et la physique deviennent alors des outils pour prendre de meilleures décisions techniques.</p>
-                <h2>Une compétence qui se construit</h2>
-                <p>La curiosité, la rigueur et la capacité à tester sont aussi importantes que les logiciels. Chaque projet est une occasion d'améliorer un dessin, de documenter un choix et de communiquer clairement avec les autres métiers.</p>
-                <blockquote>Concevoir, c'est donner une forme fiable à une idée.</blockquote>
+
+
+<!-- MENU MOBILE -->
+
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+    <div class="mobile-overlay"></div>
+
+    <aside class="mobile-drawer" role="dialog" aria-label="Menu de navigation">
+
+        <div class="mobile-head">
+            <span class="brand">
+                <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="brandGradMenu" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" style="stop-color:var(--primary)"></stop>
+                            <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                        </linearGradient>
+                    </defs>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradMenu)"></rect>
+                    <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                        <circle cx="24" cy="24" r="8.4"></circle>
+                        <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    </g>
+                </svg>
+                <span>
+                    <span class="brand-name">Tchogli <span>Magloire</span></span>
+                    <span class="brand-role">Génie mécanique</span>
+                </span>
+            </span>
+
+            <button class="icon-btn" id="mobileClose" type="button" aria-label="Fermer le menu">
+                <svg class="i" aria-hidden="true"><use href="#i-close"></use></svg>
+            </button>
+        </div>
+
+        <nav class="m-nav" aria-label="Navigation mobile">
+            <a href="index.html">Accueil <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a class="active" href="articles.html">Articles <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="projets.html">Projets <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="parcours.html">Parcours <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="ressources.html">Ressources <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="contact.html">Contact <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+        </nav>
+
+        <p class="mobile-label">Apparence</p>
+
+        <div class="m-options">
+            <div class="m-option-row">
+                <span>Thème sombre</span>
+                <button class="icon-btn" type="button" data-theme-toggle
+                        aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                        title="Passer en thème sombre">
+                    <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                    <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+                </button>
             </div>
-            <a class="btn" href="index.html#contact">Échanger sur un projet →</a>
+
+            <div class="m-option-row">
+                <span>Couleur</span>
+                <div class="accent-list">
+                    <button class="accent-swatch" type="button" data-accent="azur"
+                            aria-label="Accent azur" title="Azur"></button>
+                    <button class="accent-swatch" type="button" data-accent="ambre"
+                            aria-label="Accent ambre" title="Ambre"></button>
+                    <button class="accent-swatch" type="button" data-accent="emeraude"
+                            aria-label="Accent émeraude" title="Émeraude"></button>
+                    <button class="accent-swatch" type="button" data-accent="violet"
+                            aria-label="Accent violet" title="Violet"></button>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn block m-cta" href="contact.html">
+            Écrire un message
+            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+        </a>
+
+    </aside>
+</div>
+
+
+<main id="contenu">
+
+    <article class="article-page">
+        <div class="container">
+
+            <nav class="breadcrumb" aria-label="Fil d'Ariane">
+                <a href="index.html">Accueil</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <a href="articles.html">Articles</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <span>Transmission de puissance</span>
+            </nav>
+
+            <div class="article-head">
+                <p class="eyebrow">Mécanique</p>
+                <h1>Comment un arbre transmet-il un couple&nbsp;?</h1>
+                <p class="article-lead">
+                    Un arbre n'est pas un simple cylindre qui tourne : c'est un organe
+                    dimensionné pour reprendre torsion, flexion et fatigue pendant des
+                    milliers d'heures. Comprendre son rôle, c'est comprendre la moitié
+                    des mécanismes industriels.
+                </p>
+
+                <div class="article-meta">
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>
+                        12 septembre 2026
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-clock"></use></svg>
+                        <span data-reading-meta>6 min de lecture</span>
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-user"></use></svg>
+                        Tchogli Ayéfouni Magloire
+                    </span>
+                </div>
+            </div>
+
+            <div class="article-hero-img">
+                <img src="assets/article-mecanique.png"
+                     alt="Engrenages et arbre de transmission en cours d'analyse mécanique">
+            </div>
+
+            <div class="article-layout">
+
+                <div class="article-main">
+
+                    <div class="article-body">
+
+                        <p>
+                            Ouvrez n'importe quelle machine : un moteur, un réducteur, un
+                            convoyeur ou une éolienne. Quelque part, une pièce cylindrique
+                            tourne et transmet de l'énergie d'un endroit à un autre. Cet
+                            organe, c'est l'arbre. Sa fonction paraît simple (tourner et
+                            transmettre) mais sa conception mobilise presque toute la
+                            mécanique : résistance des matériaux, fatigue, vibrations,
+                            lubrification, tolérances et fabrication.
+                        </p>
+
+                        <h2>Ce que transmet réellement un arbre</h2>
+
+                        <p>
+                            Un arbre transmet un <strong>mouvement de rotation</strong> et un
+                            <strong>effort de torsion</strong>. Le couple est la grandeur
+                            qui décrit cet effort : il s'exprime en newtons-mètres et
+                            représente la capacité de la rotation à vaincre une résistance.
+                            Une vis serrée à la main applique un couple modeste ; le même
+                            geste avec une clé longue applique un couple bien plus grand.
+                            L'arbre est exactement cette « clé » qui va chercher l'effort
+                            là où il est disponible et le restitue là où il est utile.
+                        </p>
+                        <p>
+                            Il faut distinguer le couple de la puissance. La puissance est
+                            le produit du couple par la vitesse de rotation. Un arbre lent
+                            transmet le même effort avec un couple élevé ; un arbre rapide
+                            le transmet avec un couple faible. C'est toute la raison
+                            d'être des réducteurs et des multiplicateurs.
+                        </p>
+
+                        <h2>La chaîne de puissance, du moteur à la charge</h2>
+
+                        <p>
+                            Un arbre ne travaille jamais seul. Il s'insère dans une chaîne
+                            où l'énergie traverse plusieurs organes, chacun introduisant
+                            ses pertes et ses contraintes propres.
+                        </p>
+                        <ol>
+                            <li><strong>La source</strong> : moteur électrique, thermique
+                            ou turbine, avec sa vitesse nominale et son couple disponible.</li>
+                            <li><strong>L'accouplement</strong> : transmet le couple tout en
+                            tolérant les petits défauts d'alignement entre deux arbres.</li>
+                            <li><strong>La transmission</strong> : engrenages, courroies ou
+                            chaînes modifient vitesse et couple.</li>
+                            <li><strong>Les paliers</strong> : maintiennent l'arbre en
+                            position et reprennent les efforts radiaux et axiaux.</li>
+                            <li><strong>La charge</strong> : outil, roue, hélice ou tambour,
+                            qui oppose sa résistance au mouvement.</li>
+                        </ol>
+
+                        <p>
+                            Chaque maillon impose à l'arbre des sollicitations qu'il faut
+                            identifier avant tout calcul. Un arbre de convoyeur reprend
+                            surtout de la torsion et de la flexion ; un arbre d'hélice
+                            ajoute un effort axial important ; un arbre de broche d'usinage
+                            doit rester rigide sous des charges variables et rapides.
+                        </p>
+
+                        <blockquote>
+                            Dimensionner un arbre, c'est répondre à trois questions :
+                            quelle contrainte, pendant combien de cycles, et avec quelle
+                            conséquence en cas de rupture ?
+                        </blockquote>
+
+                        <h2>Les sollicitations qui s'accumulent</h2>
+
+                        <h3>La torsion, contrainte principale</h3>
+                        <p>
+                            Sous l'effet du couple, les fibres de l'arbre se décalent
+                            angulairement : c'est la torsion. La contrainte est maximale en
+                            surface et nulle au centre, c'est pourquoi les arbres creux
+                            sont si intéressants : ils conservent l'essentiel de leur
+                            rigidité en perdant beaucoup de matière. La déformation
+                            angulaire, elle, doit rester limitée : un arbre trop souple
+                            provoque des défauts de synchronisation et fatigue
+                            prématurément les organes voisins.
+                        </p>
+
+                        <h3>La flexion, souvent sous-estimée</h3>
+                        <p>
+                            Dès qu'un arbre porte une roue, un pignon ou un rotor, son
+                            poids et les efforts de transmission créent de la flexion. La
+                            combinaison torsion + flexion est le cas de sollicitation le
+                            plus courant en mécanique : les contraintes s'additionnent en
+                            certains points de la section et il faut les traiter
+                            ensemble.
+                        </p>
+
+                        <h3>La concentration de contraintes</h3>
+                        <p>
+                            Un changement de diamètre, une rainure de clavette, un perçage
+                            transversal ou un filetage créent une concentration locale :
+                            la contrainte peut y être plusieurs fois supérieure à celle
+                            calculée dans la section courante. La parade tient en
+                            quelques réflexes : rayons de raccordement généreux, gorges de
+                            décharge, chanfreins, et si possible positionner ces
+                            singularités dans les zones les moins sollicitées.
+                        </p>
+
+                        <div class="callout">
+                            <strong>
+                                <svg class="i" aria-hidden="true"><use href="#i-ruler"></use></svg>
+                                Les quatre vérifications d'un arbre
+                            </strong>
+                            <ul>
+                                <li>Résistance statique : la contrainte maximale au démarrage ou au blocage.</li>
+                                <li>Résistance en fatigue : le nombre de cycles prévus sur la durée de vie.</li>
+                                <li>Rigidité : flèche admissible et angle de torsion acceptable.</li>
+                                <li>Dynamique : fréquences propres éloignées des excitations (vitesse critique).</li>
+                            </ul>
+                        </div>
+
+                        <h2>Une démarche de dimensionnement en cinq étapes</h2>
+
+                        <p>
+                            Les manuels proposent des formules de pré-dimensionnement très
+                            utiles, mais elles ne dispensent pas d'une démarche structurée.
+                            Voici celle que l'on retrouve dans presque tous les projets.
+                        </p>
+
+                        <ul class="check-list">
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Établir le diagramme de puissance</strong> :
+                                puissances, vitesses et couples en chaque point de la ligne
+                                d'arbre, avec les rendements.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Estimer les diamètres</strong> : par la
+                                torsion, avec une contrainte admissible prudente, avant tout
+                                calcul fin.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Construire les diagrammes</strong> : efforts
+                                normaux, tranchants et moments fléchissants le long de
+                                l'arbre, pour trouver les sections critiques.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Vérifier en fatigue</strong> : avec les
+                                coefficients de concentration, l'état de surface et la
+                                fiabilité attendue.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Contrôler rigidité et dynamique</strong> : puis
+                                ajuster la géométrie, jamais l'inverse.</span>
+                            </li>
+                        </ul>
+
+                        <p>
+                            L'ordre compte : on choisit d'abord une géométrie cohérente avec
+                            le besoin fonctionnel (épaulements, appuis, portées de
+                            roulements) et on vérifie ensuite. Modifier un diamètre
+                            uniquement pour « faire passer le calcul » conduit souvent à un
+                            arbre mal adapté aux organes standards qui l'entourent.
+                        </p>
+
+                        <h2>Choisir la matière et les traitements</h2>
+
+                        <p>
+                            Les aciers de construction mécanique couvrent la grande
+                            majorité des besoins. Un acier doux convient aux arbres peu
+                            sollicités ; les aciers alliés, plus résistants, sont réservés
+                            aux fortes charges et aux arbres de petite section. Au-delà des
+                            valeurs de résistance, trois éléments pèsent lourd dans le
+                            choix.
+                        </p>
+                        <ul>
+                            <li><strong>La trempabilité</strong> : un arbre de grand
+                            diamètre traité en masse n'aura pas les mêmes propriétés au
+                            cœur qu'en surface.</li>
+                            <li><strong>Les traitements superficiels</strong> :
+                            cémentation, nitruration ou trempe superficielle améliorent
+                            nettement la tenue en fatigue des portées et des zones de
+                            concentration.</li>
+                            <li><strong>L'usinabilité et le coût</strong> : un acier trop
+                            durcit à l'usinage augmente le prix de la pièce sans bénéfice
+                            réel si la contrainte est modérée.</li>
+                        </ul>
+
+                        <h2>Transmettre le couple : les liaisons</h2>
+
+                        <p>
+                            Un arbre lisse ne transmet rien : il faut lier les organes qui
+                            l'entourent. Le choix de la liaison conditionne la fabrication
+                            et la maintenance.
+                        </p>
+                        <ul>
+                            <li><strong>Clavette</strong> : solution simple et économique,
+                            très répandue. Elle concentre les efforts et doit être vérifiée
+                            au cisaillement et à la pression de contact.</li>
+                            <li><strong>Cannelures</strong> : répartition des efforts sur
+                            plusieurs dentures, adaptée aux couples élevés et aux
+                            déplacements axiaux.</li>
+                            <li><strong>Freitage</strong> : transmission par serrage, sans
+                            usinage de rainure, mais démontage délicat.</li>
+                            <li><strong>Accouplements</strong> : rigides, flexibles ou
+                            élastiques selon le besoin de tolérer les défauts
+                            d'alignement.</li>
+                        </ul>
+
+                        <h2>Les chemins de la défaillance</h2>
+
+                        <p>
+                            La rupture brutale est rare ; la plupart des arbres cèdent par
+                            fatigue, après des millions de cycles, à partir d'un défaut
+                            local. Les ruptures d'arbre observées en industrie suivent
+                            presque toujours l'un de ces scénarios :
+                        </p>
+                        <ul>
+                            <li><strong>Fatigue en torsion</strong>, souvent aggravée par
+                            un couple variable et une rainure de clavette mal
+                            arrondie.</li>
+                            <li><strong>Défaillance des roulements</strong> liée à un
+                            défaut d'alignement ou de lubrification, qui finit par
+                            endommager l'arbre lui-même.</li>
+                            <li><strong>Vibrations de résonance</strong> lorsque la vitesse
+                            de rotation s'approche d'une fréquence critique.</li>
+                            <li><strong>Déformation permanente</strong> lors d'une
+                            surcharge exceptionnelle : blocage, choc ou démarrage trop
+                            brutal.</li>
+                        </ul>
+
+                        <h2>À retenir</h2>
+
+                        <p>
+                            Un arbre se conçoit comme une chaîne de décisions : besoin
+                            fonctionnel, schéma des efforts, pré-dimensionnement,
+                            vérification en fatigue, contrôle de la rigidité et de la
+                            dynamique, puis choix des liaisons et de la matière. Aucune
+                            étape n'est décorative : chacune répond à un mode de
+                            défaillance réel.
+                        </p>
+                        <p>
+                            Et si l'on ne devait retenir qu'une idée, ce serait celle-ci :
+                            <strong>un arbre n'est jamais dimensionné pour la charge
+                            nominale, mais pour le pire des cas qu'il rencontrera pendant
+                            sa durée de vie</strong>. Démarrage, à-coup, mauvaise
+                            lubrification, dysfonctionnement en aval : c'est là que la
+                            conception se juge.
+                        </p>
+
+                    </div>
+
+                    <div class="share-row">
+                        <span class="label">Partager</span>
+
+                        <button class="share-btn" type="button" data-copy-link
+                                data-copy-message="Lien de l'article copié !">
+                            <svg class="i" aria-hidden="true"><use href="#i-link"></use></svg>
+                            Copier le lien
+                        </button>
+
+                    </div>
+
+                    <div class="author-box">
+                        <div class="author-avatar">
+                            <svg viewBox="0 0 48 48" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="brandGradAuthor" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="0" y="0" width="48" height="48" fill="url(#brandGradAuthor)"></rect>
+                                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                                    <circle cx="24" cy="24" r="8.4"></circle>
+                                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Tchogli Ayéfouni Magloire</strong>
+                            <p>Étudiant en génie mécanique. J'écris ce que j'apprends en concevant, en calculant et en fabriquant.</p>
+                            <a class="text-link" href="contact.html">
+                                Me poser une question
+                                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <aside class="article-side">
+
+                    <nav class="toc" aria-label="Sommaire de l'article">
+                        <span class="toc-title">Sommaire</span>
+                        <ol></ol>
+                    </nav>
+
+                    <div class="side-card">
+                        <strong>Un calcul à vérifier ?</strong>
+                        <p>
+                            Diagramme des moments, vitesse critique, fatigue : si un
+                            résultat vous semble douteux, envoyez-moi vos hypothèses, je
+                            vous aide à le relire.
+                        </p>
+                        <a class="btn sm" href="contact.html">
+                            Demander un avis
+                            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+                        </a>
+                    </div>
+
+                    <div class="side-card">
+                        <strong>Voir un arbre en vrai</strong>
+                        <p>
+                            Le projet de réducteur à engrenages détaille un arbre réel,
+                            des calculs au plan de fabrication.
+                        </p>
+                        <a class="text-link" href="projets.html">
+                            Voir le projet
+                            <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                        </a>
+                    </div>
+
+                </aside>
+
+            </div>
+
+            <nav class="post-nav" aria-label="Navigation entre les articles">
+                <a href="article-programmation.html">
+                    <span>Article précédent</span>
+                    <strong>Python pour l'ingénieur : automatiser ses calculs</strong>
+                </a>
+                <a class="next" href="article-cao.html">
+                    <span>Article suivant</span>
+                    <strong>Du croquis au modèle 3D : bien démarrer en CAO</strong>
+                </a>
+            </nav>
+
         </div>
     </article>
+
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box reveal">
+                <div>
+                    <p class="eyebrow">Aller plus loin</p>
+                    <h2>Des calculs à mettre en pratique ?</h2>
+                    <p>
+                        Le réducteur à engrenages, l'analyse vibratoire et le support
+                        mécano-soudé montrent ces principes appliqués de bout en bout.
+                    </p>
+                </div>
+                <a class="btn" href="projets.html">
+                    Voir les projets
+                    <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tight">
+        <div class="container">
+            <div class="newsletter-box reveal">
+                <div>
+                    <p class="eyebrow">La lettre du dimanche</p>
+                    <h2>Un article utile par mois</h2>
+                    <p>
+                        Une méthode testée, une erreur expliquée, un projet décortiqué.
+                        Le récit honnête de ce que j'apprends.
+                    </p>
+                </div>
+
+                <div>
+                    <form class="newsletter-form"
+                          action="https://formsubmit.co/maglo9501@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="Nouvel abonné à la lettre du dimanche">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off">
+
+                        <label class="sr-only" for="newsletter-email">Votre adresse email</label>
+                        <input id="newsletter-email" type="email" name="email"
+                               placeholder="votre@email.com" required>
+                        <button class="btn" type="submit">
+                            S'abonner
+                            <svg class="i" aria-hidden="true"><use href="#i-mail"></use></svg>
+                        </button>
+                    </form>
+                    <p class="form-note">
+                        Votre adresse sert uniquement à l'envoi de la lettre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </main>
-<footer><div class="container footer-content"><p>Tchogli Ayéfouni Magloire<br>Étudiant en Génie Mécanique</p><div class="footer-links"><a href="index.html">Accueil</a><a href="articles.html">Articles</a><a href="projets.html">Projets</a><a href="parcours.html">Parcours</a><a href="ressources.html">Ressources</a><a href="contact.html">Contact</a></div></div><div class="footer-bottom"><p>© <span class="current-year">2026</span> Tous droits réservés.</p></div></footer>
+
+
+<!-- =========================================================
+     PIED DE PAGE
+     ========================================================= -->
+
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a class="brand" href="index.html">
+                    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="brandGradFoot" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradFoot)"></rect>
+                        <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                            <circle cx="24" cy="24" r="8.4"></circle>
+                            <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                            <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                        </g>
+                    </svg>
+                    <span>
+                        <span class="brand-name">Tchogli <span>Magloire</span></span>
+                        <span class="brand-role">Génie mécanique</span>
+                    </span>
+                </a>
+
+                <p>
+                    Portfolio d'un étudiant en génie mécanique : projets de conception,
+                    articles techniques et ressources pour progresser, de la théorie
+                    à la pièce fabriquée.
+                </p>
+
+                <div class="socials">
+                    <a class="social-btn" href="contact.html"
+                       aria-label="Ouvrir la page contact" title="Page contact">
+                        <svg aria-hidden="true"><use href="#i-message"></use></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="f-col">
+                <h4>Navigation</h4>
+                <ul class="f-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="projets.html">Projets</a></li>
+                    <li><a href="parcours.html">Parcours</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Explorer</h4>
+                <ul class="f-links">
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="articles.html">Tous les articles</a></li>
+                    <li><a href="projets.html">Tous les projets</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Contact</h4>
+                <ul class="f-contact">
+                    <li>
+                        <svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>
+                        <a href="contact.html">Formulaire de contact</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span class="current-year">2026</span> Tchogli Ayéfouni Magloire. Tous droits réservés.</p>
+            <p>Conçu et écrit avec <span class="heart">♥</span> en HTML, CSS et JavaScript.</p>
+        </div>
+
+    </div>
+</footer>
+
+
+<button class="to-top" id="toTop" type="button" aria-label="Revenir en haut de la page" title="Haut de page">
+    <svg class="i" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+    <svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>
+    <span data-toast-text>Copié !</span>
+</div>
+
+
 <script src="script.js"></script>
+
 </body>
 </html>

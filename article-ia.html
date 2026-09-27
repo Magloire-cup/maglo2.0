@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>L'intelligence artificielle au service de l'ingénierie | Tchogli Ayéfouni Magloire</title>
+
+    <meta name="description"
+          content="Usages concrets de l'intelligence artificielle en génie mécanique : maintenance prédictive, optimisation de forme, analyse de mesures d'essais, et les limites à ne jamais oublier.">
+    <meta name="author" content="Tchogli Ayéfouni Magloire">
+    <meta name="keywords"
+          content="intelligence artificielle ingénierie, maintenance prédictive, apprentissage automatique, optimisation de forme, analyse de données, génie mécanique">
+    <meta name="theme-color" content="#f5f7fb">
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Tchogli Ayéfouni Magloire">
+    <meta property="og:title" content="L'intelligence artificielle au service de l'ingénierie">
+    <meta property="og:description"
+          content="L'IA ne remplace pas l'ingénieur : elle absorbe les tâches répétitives et fait parler les données. Panorama concret des usages utiles et des limites.">
+    <meta property="og:image" content="assets/article-ia.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        /* Applique le thème et l'accent mémorisés avant le premier rendu */
+        (function () {
+            var root = document.documentElement;
+            var theme = "light";
+            var accent = "azur";
+            try {
+                var stored = localStorage.getItem("theme");
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                    theme = "dark";
+                }
+                accent = localStorage.getItem("accent") || "azur";
+            } catch (error) {
+                /* stockage indisponible : valeurs par défaut */
+            }
+            root.setAttribute("data-theme", theme);
+            root.setAttribute("data-accent", accent);
+        })();
+    </script>
+
+    <noscript>
+        <style>
+            .reveal { opacity: 1; transform: none; }
+        </style>
+    </noscript>
+</head>
+
+<body>
+
+<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+<div class="read-progress" aria-hidden="true"></div>
+
+<!-- Bibliothèque d'icônes (SVG sprite) -->
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
+     focusable="false" xmlns="http://www.w3.org/2000/svg">
+
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v1.8M12 19.2V21M4.2 4.2l1.3 1.3M18.5 18.5l1.3 1.3M3 12h1.8M19.2 12H21M4.2 19.8l1.3-1.3M18.5 5.5l1.3-1.3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.9A8.6 8.6 0 1 1 11.1 3a6.8 6.8 0 0 0 9.9 9.9Z"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2s6 6.4 6 10.4a6 6 0 0 1-12 0c0-4 6-10.4 6-10.4Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.2"/><path d="M5 15H4.2A1.2 1.2 0 0 1 3 13.8V4.2A1.2 1.2 0 0 1 4.2 3h9.6A1.2 1.2 0 0 1 15 4.2V5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3.5 6.5 8.5 6.2 8.5-6.2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 3 9.8l7.7 3.5 3.5 7.7Z"/><path d="M21.5 2.5 10.7 13.3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 11h17"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.3 13.3 20.6a2 2 0 0 1-2.8 0l-7.1-7.1A2 2 0 0 1 2.8 12V5.2a2 2 0 0 1 2-2h6.8a2 2 0 0 1 1.4.6l7.6 7.5a2 2 0 0 1 0 2Z"/><circle cx="7.6" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18.5 14v4.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="m8.4 10.7 7.2-4.2M8.4 13.3l7.2 4.2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5a4.2 4.2 0 0 0 5.9 0l2.9-2.9a4.2 4.2 0 0 0-5.9-5.9l-1.3 1.3"/><path d="M13.5 10.5a4.2 4.2 0 0 0-5.9 0l-2.9 2.9a4.2 4.2 0 0 0 5.9 5.9l1.3-1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.8"/><path d="M4.8 20.4a7.2 7.2 0 0 1 14.4 0"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s7-6.3 7-11.2a7 7 0 1 0-14 0c0 4.9 7 11.2 7 11.2Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-8.5 8.5H4.5l2.3-3.2A8.5 8.5 0 1 1 20.5 12Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C12 5 10.7 3.6 8.4 3.6H3v13.6h5.4C10.7 17.2 12 18.6 12 20.2"/><path d="M12 6.6c0-1.6 1.3-3 3.6-3H21v13.6h-5.4c-2.3 0-3.6 1.4-3.6 3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.2H7.2A2.2 2.2 0 0 0 5 5.4v13.2a2.2 2.2 0 0 0 2.2 2.2h9.6a2.2 2.2 0 0 0 2.2-2.2V8Z"/><path d="M13.8 3.4V8h5.1"/><path d="M8.5 13h7M8.5 16.5h4.5"/></symbol>
+    <symbol id="i-graduate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4.2-9 4.1 9 4.1 9-4.1Z"/><path d="M7 10.4V15c0 1.4 2.2 2.6 5 2.6s5-1.2 5-2.6v-4.6"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.2" width="18" height="13" rx="2.4"/><path d="M9 7.2V5.4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.8"/><path d="M3.5 12.6h17"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 18h5.6"/><path d="M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.4 10.9c.6.5 1 1.2 1 2h4.8c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 17 5.8-5.8 3.8 3.8L20 8.2"/><path d="M15 8.2h5v5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h18"/><rect x="5" y="11.5" width="3.6" height="6" rx="1.2"/><rect x="10.2" y="7.5" width="3.6" height="10" rx="1.2"/><rect x="15.4" y="13.5" width="3.6" height="4" rx="1.2"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.3v7.4L12 20.9 3.2 15.7V8.3L12 3.1Z"/><path d="M3.5 8.5 12 13.4l8.5-4.9"/><path d="M12 13.4v7.5"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.2 8.8 4.6L12 12.4 3.2 7.8Z"/><path d="m3.2 12.2 8.8 4.6 8.8-4.6"/><path d="m3.2 16.4 8.8 4.6 8.8-4.6"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 15.2 15.2 3.4l5.4 5.4L8.8 20.6Z"/><path d="m7.6 11 2.2 2.2M11 7.6l2.2 2.2M14.4 4.2l2.2 2.2"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8l-4.6 4 4.6 4"/><path d="m15.4 8 4.6 4-4.6 4"/><path d="M13.4 4.8 10.6 19.2"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v5.6L5.7 17a2.4 2.4 0 0 0 2.1 3.6h8.4a2.4 2.4 0 0 0 2.1-3.6L13.5 8.6V3"/><path d="M7.6 14.4h8.8"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="2.2"/><path d="M10.5 2.6v4.4M13.5 2.6v4.4M10.5 17v4.4M13.5 17v4.4M2.6 10.5H7M2.6 13.5H7M17 10.5h4.4M17 13.5h4.4"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2h9.4a2.9 2.9 0 1 0-2.9-2.9"/><path d="M3 15.8h13.4a2.9 2.9 0 1 1-2.9 2.9"/><path d="M3 12h16.4a2.9 2.9 0 1 0-2.9-2.9"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5.2 5.8v6.1c0 4.3 2.9 7.9 6.8 9.4 3.9-1.5 6.8-5.1 6.8-9.4V5.8Z"/><path d="m9.4 11.9 2 2 3.2-3.4"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11.5 3.8 1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6Z"/><path d="m18 15.4.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12a8.6 8.6 0 1 1-2.6-6.2"/><path d="M20.8 3.6v5h-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10.2 8.6 5.6 3.4-5.6 3.4Z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3Z"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.2" rx="7.4" ry="3.2"/><path d="M4.6 6.2v11.6c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2V6.2"/><path d="M4.6 12c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2.4 4.8 13.6h6l-1.2 8 8.6-11.2h-6Z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 4.4l4 4L8.8 19.2H4.8v-4Z"/><path d="m13.6 6.4 4 4"/></symbol>
+    <symbol id="i-nut" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 20 7.8v8.4l-8 4.6-8-4.6V7.8Z"/><circle cx="12" cy="12" r="3.1"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.4"/><path d="M12 2.2v3.4M12 18.4v3.4M3.4 5.6 6 8.2M18 15.8l2.6 2.6M2.2 12h3.4M18.4 12h3.4M3.4 18.4 6 15.8M18 8.2l2.6-2.6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6.2 6.4 12 6.4 21.5 12 21.5 12 17.8 17.6 12 17.6 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5.4"/><path d="m8.6 13.8-1.4 7 4.8-2.8 4.8 2.8-1.4-7"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.4S3.6 15.4 3.6 9.8a4.7 4.7 0 0 1 8.4-3 4.7 4.7 0 0 1 8.4 3c0 5.6-8.4 10.6-8.4 10.6Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+
+<!-- =========================================================
+     EN-TÊTE
+     ========================================================= -->
+
+<header class="site-header">
+    <div class="container nav-bar">
+
+        <a class="brand" href="index.html" aria-label="Accueil, Tchogli Ayéfouni Magloire">
+            <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <defs>
+                    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                    </linearGradient>
+                </defs>
+                <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGrad)"></rect>
+                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                    <circle cx="24" cy="24" r="8.4"></circle>
+                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                </g>
+            </svg>
+            <span>
+                <span class="brand-name">Tchogli <span>Magloire</span></span>
+                <span class="brand-role">Génie mécanique</span>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a class="nav-link" href="index.html">Accueil</a>
+            <a class="nav-link active" href="articles.html" aria-current="page">Articles</a>
+            <a class="nav-link" href="projets.html">Projets</a>
+            <a class="nav-link" href="parcours.html">Parcours</a>
+            <a class="nav-link" href="ressources.html">Ressources</a>
+            <a class="nav-link" href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="accent-wrap" id="accentWrap">
+                <button class="icon-btn" id="accentBtn" type="button"
+                        aria-expanded="false" aria-haspopup="true"
+                        aria-label="Changer la couleur d'accent" title="Couleur d'accent">
+                    <svg class="i" aria-hidden="true"><use href="#i-droplet"></use></svg>
+                </button>
+
+                <div class="accent-pop" id="accentPop" role="dialog" aria-label="Couleur d'accent">
+                    <span class="accent-pop-title">Couleur d'accent</span>
+                    <div class="accent-list">
+                        <button class="accent-swatch" type="button" data-accent="azur"
+                                aria-label="Accent azur" title="Azur"></button>
+                        <button class="accent-swatch" type="button" data-accent="ambre"
+                                aria-label="Accent ambre" title="Ambre"></button>
+                        <button class="accent-swatch" type="button" data-accent="emeraude"
+                                aria-label="Accent émeraude" title="Émeraude"></button>
+                        <button class="accent-swatch" type="button" data-accent="violet"
+                                aria-label="Accent violet" title="Violet"></button>
+                    </div>
+                    <p class="accent-pop-note">
+                        L'accent colore tout le site et reste mémorisé sur cet appareil.
+                    </p>
+                </div>
+            </div>
+
+            <button class="icon-btn" type="button" data-theme-toggle
+                    aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                    title="Passer en thème sombre">
+                <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+            </button>
+
+            <a class="btn sm nav-cta" href="contact.html">Me contacter</a>
+
+            <button class="burger" id="menuBtn" type="button"
+                    aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobilePanel">
+                <span></span>
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+
+<!-- MENU MOBILE -->
+
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+    <div class="mobile-overlay"></div>
+
+    <aside class="mobile-drawer" role="dialog" aria-label="Menu de navigation">
+
+        <div class="mobile-head">
+            <span class="brand">
+                <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="brandGradMenu" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" style="stop-color:var(--primary)"></stop>
+                            <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                        </linearGradient>
+                    </defs>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradMenu)"></rect>
+                    <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                        <circle cx="24" cy="24" r="8.4"></circle>
+                        <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    </g>
+                </svg>
+                <span>
+                    <span class="brand-name">Tchogli <span>Magloire</span></span>
+                    <span class="brand-role">Génie mécanique</span>
+                </span>
+            </span>
+
+            <button class="icon-btn" id="mobileClose" type="button" aria-label="Fermer le menu">
+                <svg class="i" aria-hidden="true"><use href="#i-close"></use></svg>
+            </button>
+        </div>
+
+        <nav class="m-nav" aria-label="Navigation mobile">
+            <a href="index.html">Accueil <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a class="active" href="articles.html">Articles <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="projets.html">Projets <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="parcours.html">Parcours <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="ressources.html">Ressources <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="contact.html">Contact <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+        </nav>
+
+        <p class="mobile-label">Apparence</p>
+
+        <div class="m-options">
+            <div class="m-option-row">
+                <span>Thème sombre</span>
+                <button class="icon-btn" type="button" data-theme-toggle
+                        aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                        title="Passer en thème sombre">
+                    <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                    <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+                </button>
+            </div>
+
+            <div class="m-option-row">
+                <span>Couleur</span>
+                <div class="accent-list">
+                    <button class="accent-swatch" type="button" data-accent="azur"
+                            aria-label="Accent azur" title="Azur"></button>
+                    <button class="accent-swatch" type="button" data-accent="ambre"
+                            aria-label="Accent ambre" title="Ambre"></button>
+                    <button class="accent-swatch" type="button" data-accent="emeraude"
+                            aria-label="Accent émeraude" title="Émeraude"></button>
+                    <button class="accent-swatch" type="button" data-accent="violet"
+                            aria-label="Accent violet" title="Violet"></button>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn block m-cta" href="contact.html">
+            Écrire un message
+            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+        </a>
+
+    </aside>
+</div>
+
+
+<main id="contenu">
+
+    <article class="article-page">
+        <div class="container">
+
+            <nav class="breadcrumb" aria-label="Fil d'Ariane">
+                <a href="index.html">Accueil</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <a href="articles.html">Articles</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <span>Intelligence artificielle</span>
+            </nav>
+
+            <div class="article-head">
+                <p class="eyebrow">Numérique</p>
+                <h1>L'intelligence artificielle au service de l'ingénierie</h1>
+                <p class="article-lead">
+                    L'IA ne remplace pas l'ingénieur : elle absorbe les tâches
+                    répétitives et fait parler les données. Voici les usages réellement
+                    utiles en mécanique, et les limites qu'il serait imprudent
+                    d'oublier.
+                </p>
+
+                <div class="article-meta">
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>
+                        26 septembre 2026
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-clock"></use></svg>
+                        <span data-reading-meta>8 min de lecture</span>
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-user"></use></svg>
+                        Tchogli Ayéfouni Magloire
+                    </span>
+                </div>
+            </div>
+
+            <div class="article-hero-img">
+                <img src="assets/article-ia.png"
+                     alt="Écran affichant un modèle d'apprentissage automatique appliqué à des données d'ingénierie">
+            </div>
+
+            <div class="article-layout">
+
+                <div class="article-main">
+
+                    <div class="article-body">
+
+                        <p>
+                            En génie mécanique, l'intelligence artificielle fait souvent
+                            l'objet de deux discours opposés : celui qui en attend une
+                            révolution complète, et celui qui la réduit à un effet de mode.
+                            La réalité se situe entre les deux. L'IA est un ensemble
+                            d'outils statistiques qui excellent dans une chose précise :
+                            <strong>trouver des régularités dans des données que l'humain
+                            ne peut pas traiter à la main</strong>. Comprendre ce périmètre,
+                            c'est déjà savoir quand l'utiliser, et quand s'en passer.
+                        </p>
+
+                        <h2>Ce que l'IA fait réellement en ingénierie</h2>
+
+                        <p>
+                            Trois familles de problèmes reviennent constamment dans les
+                            projets mécaniques. Elles ont en commun de produire beaucoup de
+                            données, d'être difficiles à traiter analytiquement, et
+                            d'admettre une marge d'incertitude acceptable.
+                        </p>
+
+                        <ul class="check-list">
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Prédire</strong> : anticiper une défaillance,
+                                une dérive ou une durée de vie à partir de mesures
+                                historiques.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Optimiser</strong> : explorer des milliers de
+                                variantes de forme ou de dimension pour approcher un
+                                objectif de masse, de rigidité ou de coût.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Analyser</strong> : trier, classer et résumer
+                                des volumes de mesures ou de simulations impossibles à
+                                inspecter manuellement.</span>
+                            </li>
+                        </ul>
+
+                        <p>
+                            Remarquez ce qui ne figure pas dans cette liste : décider.
+                            Un modèle statistique ne connaît ni le contexte du chantier,
+                            ni la disponibilité des matières, ni les conséquences d'une
+                            erreur. Il produit une estimation ; la décision reste
+                            technique, documentée et humaine.
+                        </p>
+
+                        <h2>Trois usages concrets et vérifiables</h2>
+
+                        <h3>Maintenance prédictive sur machine tournante</h3>
+                        <p>
+                            Un roulement qui se dégrade modifie son signal vibratoire
+                            bien avant la panne franche. En enregistrant régulièrement
+                            l'accélération sur un palier et en suivant l'évolution de
+                            certains indicateurs, il devient possible d'estimer une
+                            tendance et de programmer l'intervention au bon moment.
+                            L'IA n'invente rien ici : elle reproduit à grande échelle un
+                            raisonnement que les techniciens font à l'oreille depuis
+                            longtemps, mais avec des mesures traçables.
+                        </p>
+
+                        <h3>Optimisation de forme</h3>
+                        <p>
+                            Pour alléger une pièce sans perdre en rigidité, un algorithme
+                            peut tester des centaines de répartitions de matière, en
+                            s'appuyant sur les résultats de calculs de structure. Le
+                            résultat brut a souvent un aspect organique surprenant. Son
+                            intérêt n'est pas d'être fabriqué tel quel, mais de montrer
+                            où la matière est vraiment utile : une information qu'un
+                            dessinateur mettrait des jours à approcher par itérations.
+                        </p>
+
+                        <h3>Analyse de mesures d'essais</h3>
+                        <p>
+                            Un essai de fatigue produit des milliers de cycles
+                            enregistrés. Un essai thermique fournit des centaines de
+                            thermocouples. Les outils d'analyse de données détectent les
+                            points aberrants, regroupent les comportements similaires et
+                            font ressortir les tendances. Sur une campagne d'essais, ce
+                            tri automatique évite le pire des scénarios : passer à côté
+                            d'une anomalie noyée dans le volume.
+                        </p>
+
+                        <blockquote>
+                            Un modèle prédictif n'a de valeur que si l'on sait expliquer
+                            ce qu'il a appris, et vérifier qu'il n'a pas appris la
+                            mauvaise chose.
+                        </blockquote>
+
+                        <h2>Ce que l'IA ne remplace pas</h2>
+
+                        <p>
+                            Les erreurs les plus coûteuses naissent d'un malentendu sur
+                            le rôle de l'outil. Un modèle entraîné sur des données
+                            passées reproduira les biais de ces données, y compris leurs
+                            insuffisances.
+                        </p>
+                        <p>
+                            Prenons un exemple volontairement simple : un modèle qui
+                            prévoit la durée de vie d'un roulement. Sur le papier, la
+                            prédiction peut sembler excellente. Mais si le roulement a
+                            été remplacé par une référence différente, monté avec un jeu
+                            inadapté ou graissé tous les deux ans au lieu de six mois, la
+                            prédiction ne décrit plus rien de réel. Le modèle n'a pas
+                            tort : il répond à une question qui n'est plus la bonne.
+                        </p>
+                        <ul>
+                            <li><strong>La définition du besoin</strong> : formuler ce
+                            qui est acceptable, ce qui ne l'est pas, et dans quelles
+                            conditions d'usage.</li>
+                            <li><strong>Le jugement mécanique</strong> : savoir qu'une
+                            contrainte dépasse la limite élastique, qu'un mode vibratoire
+                            se rapproche d'une excitation, qu'un jeu devient excessif.</li>
+                            <li><strong>La responsabilité technique</strong> : signer une
+                            note de calcul implique d'en comprendre chaque hypothèse.</li>
+                            <li><strong>La sécurité</strong> : un dimensionnement qui
+                            « sort » d'un modèle reste à confronter aux règles de
+                            l'art et aux coefficients de sécurité.</li>
+                        </ul>
+
+                        <div class="callout">
+                            <strong>
+                                <svg class="i" aria-hidden="true"><use href="#i-shield"></use></svg>
+                                La règle du double contrôle
+                            </strong>
+                            <p>
+                                Quand un résultat automatique influence une décision
+                                technique, il doit pouvoir être recoupé par un calcul
+                                classique, un essai ou une mesure. Si aucun des trois
+                                n'est possible, la décision attendra une vérification
+                                supplémentaire.
+                            </p>
+                        </div>
+
+                        <h2>La donnée avant le modèle</h2>
+
+                        <p>
+                            Dans la pratique, la partie la plus longue d'un projet d'IA
+                            n'est pas l'algorithme : c'est la préparation des données.
+                            Mesures dans des unités différentes, capteurs décalés,
+                            périodes d'arrêt machine enregistrées comme des valeurs
+                            normales, légendes incohérentes dans un tableur partagé…
+                            Toutes ces imperfections se retrouvent dans le modèle.
+                        </p>
+                        <p>
+                            Un principe simple aide à tenir la qualité : <strong>on ne
+                            modélise jamais plus fin que ce que l'on mesure</strong>. Si
+                            la température est enregistrée toutes les dix minutes, inutile
+                            de prétendre décrire des variations de quelques secondes. Le
+                            bon réflexe consiste à documenter chaque colonne (unité,
+                            capteur, conditions d'acquisition) avant toute analyse.
+                        </p>
+                        <p>
+                            Ce temps de préparation n'est jamais perdu. C'est souvent à
+                            cette occasion que l'on découvre que deux capteurs ne
+                            mesurent pas la même chose, ou qu'une série de relevés a été
+                            prise pendant une phase de rodage. Ces découvertes ont plus
+                            de valeur que le modèle lui-même.
+                        </p>
+
+                        <h2>Un exemple de raisonnement, sans code compliqué</h2>
+
+                        <p>
+                            Imaginons un convoyeur dont on souhaite estimer la durée de
+                            vie des paliers. Trois données sont disponibles : la charge
+                            transportée, les heures de fonctionnement et le relevé
+                            vibratoire hebdomadaire. Même sans modèle sophistiqué, on peut
+                            déjà construire une démarche utile.
+                        </p>
+                        <ol>
+                            <li><strong>Vérifier la cohérence</strong> : croiser les
+                            heures de marche avec la charge moyenne de la semaine.</li>
+                            <li><strong>Suivre une tendance</strong> : tracer l'évolution
+                            du niveau vibratoire pour chaque palier, plutôt que de
+                            comparer à un seuil unique.</li>
+                            <li><strong>Fixer un critère d'alerte</strong> : déclencher une
+                            inspection quand la tendance dépasse un rythme d'évolution
+                            anormal, pas seulement quand un seuil absolu est franchi.</li>
+                            <li><strong>Consigner les interventions</strong> : chaque
+                            remplacement enrichit l'historique et améliore les
+                            prédictions futures.</li>
+                        </ol>
+
+                        <p>
+                            Rien d'exotique : une feuille de calcul bien construite suffit
+                            à démarrer. L'outil devient plus sophistiqué seulement quand
+                            le volume de données le justifie, jamais avant.
+                        </p>
+
+                        <h2>Reconnaître les projets où l'IA n'a rien à faire</h2>
+
+                        <p>
+                            À l'inverse, certains problèmes se résolvent très bien sans
+                            elle, et plus vite. Un arbre à dimensionner se calcule avec
+                            une formule et une marge. Une vis à choisir se lit dans un
+                            catalogue. Un mécanisme à concevoir se raisonne avec des
+                            schémas et des équations. Ajouter un modèle statistique y
+                            apporterait de la complexité sans aucune valeur.
+                        </p>
+
+                        <p>
+                            Un signe qui ne trompe pas : si le nombre de cas à traiter
+                            est faible, si les grandeurs sont connues avec précision, ou
+                            si une règle de calcul normalisée existe, l'approche classique
+                            gagne. L'IA devient intéressante quand ces trois conditions
+                            tombent en même temps : beaucoup de cas, des mesures bruitées,
+                            aucune formule fermée satisfaisante.
+                        </p>
+
+                        <p>
+                            Poser cette question très tôt évite un piège fréquent chez les
+                            étudiants : choisir un sujet de projet « à base d'IA » avant
+                            même de savoir quel problème mécanique il doit résoudre. Le
+                            sujet doit venir du besoin, jamais de l'outil.
+                        </p>
+
+                        <h2>Comment se former sans se disperser</h2>
+
+                        <p>
+                            L'offre de formations en IA est immense, ce qui est un piège
+                            pour un étudiant en mécanique : on peut passer des mois à
+                            apprendre des outils sans jamais les appliquer à un problème
+                            mécanique. Une progression plus efficace existe.
+                        </p>
+
+                        <ul class="check-list">
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Maîtriser les données d'abord</strong>,
+                                tableurs, Python, statistiques descriptives : le socle
+                                indispensable, utile même sans IA.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Partir d'un problème réel</strong> : vos
+                                propres mesures de TP, un historique de machine, un jeu de
+                                données public de matériaux.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Commencer simple</strong> : une régression
+                                linéaire bien validée apporte plus qu'un réseau de
+                                neurones mal compris.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Valider systématiquement</strong> : garder
+                                des données de test intactes, comparer aux valeurs
+                                mesurées, quantifier l'erreur.</span>
+                            </li>
+                        </ul>
+
+                        <h3>Trois exercices à portée d'étudiant</h3>
+
+                        <p>
+                            Pas besoin d'un stage en entreprise pour se frotter au
+                            sujet. Une série de mesures relevées en travaux pratiques,
+                            un historique de température d'un local technique, un jeu
+                            de données public sur les propriétés des matériaux :
+                            chacun contient assez de bruit et d'imperfections pour
+                            apprendre. L'objectif n'est pas d'obtenir une prédiction
+                            spectaculaire, mais de traverser une fois le cycle complet :
+                            nettoyer, visualiser, modéliser, valider, puis douter du
+                            résultat.
+                        </p>
+
+                        <p>
+                            Une règle simple aide à ne pas se perdre : chaque heure
+                            passée à apprendre un outil devrait répondre à une question
+                            posée sur un projet en cours. Sans projet, la formation
+                            devient une collection : des notions alignées côte à côte,
+                            jamais reliées entre elles, et oubliées en quelques
+                            semaines.
+                        </p>
+
+                        <h2>Une compétence de plus, pas une baguette magique</h2>
+
+                        <p>
+                            Dans dix ans, savoir dialoguer avec des données sera aussi
+                            banal pour un ingénieur que savoir lire un plan. Ce n'est pas
+                            une raison pour abandonner la résistance des matériaux ou la
+                            dynamique : c'est une raison pour considérer l'analyse de
+                            données comme un outil de plus dans la boîte.
+                        </p>
+                        <p>
+                            La bonne posture tient en une phrase : se servir de l'IA pour
+                            <strong>poser de meilleures questions</strong> à un système
+                            mécanique, et garder la responsabilité des réponses. Un
+                            ingénieur qui comprend ses données et vérifie ses résultats
+                            restera toujours plus précieux qu'un modèle qui produit des
+                            chiffres sans justification.
+                        </p>
+                        <p>
+                            Le meilleur indicateur de progrès n'est d'ailleurs pas le
+                            nombre d'outils maîtrisés, mais la qualité des questions
+                            posées avant de lancer une analyse : ai-je assez de données ?
+                            Sont-elles représentatives du fonctionnement réel ? Que se
+                            passe-t-il si le modèle se trompe de dix pour cent ? Ces
+                            questions-là valent mieux que n'importe quelle bibliothèque
+                            logicielle.
+                        </p>
+
+                    </div>
+
+                    <div class="share-row">
+                        <span class="label">Partager</span>
+
+                        <button class="share-btn" type="button" data-copy-link
+                                data-copy-message="Lien de l'article copié !">
+                            <svg class="i" aria-hidden="true"><use href="#i-link"></use></svg>
+                            Copier le lien
+                        </button>
+
+                    </div>
+
+                    <div class="author-box">
+                        <div class="author-avatar">
+                            <svg viewBox="0 0 48 48" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="brandGradAuthor" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="0" y="0" width="48" height="48" fill="url(#brandGradAuthor)"></rect>
+                                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                                    <circle cx="24" cy="24" r="8.4"></circle>
+                                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Tchogli Ayéfouni Magloire</strong>
+                            <p>Étudiant en génie mécanique. J'écris ce que j'apprends en concevant, en calculant et en fabriquant.</p>
+                            <a class="text-link" href="contact.html">
+                                Me poser une question
+                                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <aside class="article-side">
+
+                    <nav class="toc" aria-label="Sommaire de l'article">
+                        <span class="toc-title">Sommaire</span>
+                        <ol></ol>
+                    </nav>
+
+                    <div class="side-card">
+                        <strong>Un doute sur un résultat ?</strong>
+                        <p>
+                            Vous avez un calcul, un graphique ou un modèle qui semble
+                            trop beau pour être vrai ? Décrivez-moi le contexte, je vous
+                            aide à le vérifier.
+                        </p>
+                        <a class="btn sm" href="contact.html">
+                            Demander un avis
+                            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+                        </a>
+                    </div>
+
+                    <div class="side-card">
+                        <strong>Autres lectures</strong>
+                        <p>
+                            Automatiser ses calculs avec Python, ou reprendre un modèle
+                            3D : deux articles qui prolongent celui-ci.
+                        </p>
+                        <a class="text-link" href="articles.html">
+                            Voir tous les articles
+                            <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                        </a>
+                    </div>
+
+                </aside>
+
+            </div>
+
+            <nav class="post-nav" aria-label="Navigation entre les articles">
+                <a href="article-cao.html">
+                    <span>Article précédent</span>
+                    <strong>Du croquis au modèle 3D : bien démarrer en CAO</strong>
+                </a>
+                <a class="next" href="articles.html">
+                    <span>Pour continuer</span>
+                    <strong>Retour à tous les articles</strong>
+                </a>
+            </nav>
+
+        </div>
+    </article>
+
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box reveal">
+                <div>
+                    <p class="eyebrow">Continuer la lecture</p>
+                    <h2>Envie de passer de la théorie à la pratique ?</h2>
+                    <p>
+                        Découvrez les projets : du cahier des charges à la pièce essayée,
+                        avec les choix techniques et les écarts mesurés.
+                    </p>
+                </div>
+                <a class="btn" href="projets.html">
+                    Voir les projets
+                    <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tight">
+        <div class="container">
+            <div class="newsletter-box reveal">
+                <div>
+                    <p class="eyebrow">La lettre du dimanche</p>
+                    <h2>Un article utile par mois</h2>
+                    <p>
+                        Une méthode testée, une erreur expliquée, un projet décortiqué.
+                        Le récit honnête de ce que j'apprends.
+                    </p>
+                </div>
+
+                <div>
+                    <form class="newsletter-form"
+                          action="https://formsubmit.co/maglo9501@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="Nouvel abonné à la lettre du dimanche">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off">
+
+                        <label class="sr-only" for="newsletter-email">Votre adresse email</label>
+                        <input id="newsletter-email" type="email" name="email"
+                               placeholder="votre@email.com" required>
+                        <button class="btn" type="submit">
+                            S'abonner
+                            <svg class="i" aria-hidden="true"><use href="#i-mail"></use></svg>
+                        </button>
+                    </form>
+                    <p class="form-note">
+                        Votre adresse sert uniquement à l'envoi de la lettre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     PIED DE PAGE
+     ========================================================= -->
+
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a class="brand" href="index.html">
+                    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="brandGradFoot" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradFoot)"></rect>
+                        <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                            <circle cx="24" cy="24" r="8.4"></circle>
+                            <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                            <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                        </g>
+                    </svg>
+                    <span>
+                        <span class="brand-name">Tchogli <span>Magloire</span></span>
+                        <span class="brand-role">Génie mécanique</span>
+                    </span>
+                </a>
+
+                <p>
+                    Portfolio d'un étudiant en génie mécanique : projets de conception,
+                    articles techniques et ressources pour progresser, de la théorie
+                    à la pièce fabriquée.
+                </p>
+
+                <div class="socials">
+                    <a class="social-btn" href="contact.html"
+                       aria-label="Ouvrir la page contact" title="Page contact">
+                        <svg aria-hidden="true"><use href="#i-message"></use></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="f-col">
+                <h4>Navigation</h4>
+                <ul class="f-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="projets.html">Projets</a></li>
+                    <li><a href="parcours.html">Parcours</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Explorer</h4>
+                <ul class="f-links">
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="articles.html">Tous les articles</a></li>
+                    <li><a href="projets.html">Tous les projets</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Contact</h4>
+                <ul class="f-contact">
+                    <li>
+                        <svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>
+                        <a href="contact.html">Formulaire de contact</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span class="current-year">2026</span> Tchogli Ayéfouni Magloire. Tous droits réservés.</p>
+            <p>Conçu et écrit avec <span class="heart">♥</span> en HTML, CSS et JavaScript.</p>
+        </div>
+
+    </div>
+</footer>
+
+
+<button class="to-top" id="toTop" type="button" aria-label="Revenir en haut de la page" title="Haut de page">
+    <svg class="i" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+    <svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>
+    <span data-toast-text>Copié !</span>
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

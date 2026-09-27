@@ -3,14 +3,761 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Méthodes pour apprendre plus efficacement les cours d'ingénierie.">
-    <title>Mieux apprendre ses cours d'ingénierie | Magloire</title>
+
+    <title>Comment apprendre l'ingénierie sans se noyer | Tchogli Ayéfouni Magloire</title>
+
+    <meta name="description"
+          content="Formules, logiciels, projets : la charge d'un étudiant en génie mécanique paraît infinie. Méthodes concrètes pour avancer chaque semaine sans s'épuiser ni accumuler sans comprendre.">
+    <meta name="author" content="Tchogli Ayéfouni Magloire">
+    <meta name="keywords"
+          content="apprendre génie mécanique, méthode de travail étudiant, mémorisation active, organisation révisions, comprendre les formules">
+    <meta name="theme-color" content="#f5f7fb">
+
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Tchogli Ayéfouni Magloire">
+    <meta property="og:title" content="Comment apprendre l'ingénierie sans se noyer">
+    <meta property="og:description"
+          content="Quelques principes simples pour transformer des heures de lecture en compétences qui restent : question de départ, mémoire active, lien avec le réel.">
+    <meta property="og:image" content="assets/article-apprentissage.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+
     <link rel="stylesheet" href="style.css">
+
+    <script>
+        /* Applique le thème et l'accent mémorisés avant le premier rendu */
+        (function () {
+            var root = document.documentElement;
+            var theme = "light";
+            var accent = "azur";
+            try {
+                var stored = localStorage.getItem("theme");
+                if (stored) {
+                    theme = stored;
+                } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                    theme = "dark";
+                }
+                accent = localStorage.getItem("accent") || "azur";
+            } catch (error) {
+                /* stockage indisponible : valeurs par défaut */
+            }
+            root.setAttribute("data-theme", theme);
+            root.setAttribute("data-accent", accent);
+        })();
+    </script>
+
+    <noscript>
+        <style>
+            .reveal { opacity: 1; transform: none; }
+        </style>
+    </noscript>
 </head>
+
 <body>
-<header class="header"><div class="container nav"><a href="index.html" class="logo">MAGLOIRE</a><nav><a href="index.html">Accueil</a><a href="articles.html" class="active">Articles</a><a href="projets.html">Projets</a><a href="parcours.html">Parcours</a><a href="ressources.html">Ressources</a><a href="contact.html">Contact</a></nav><button id="themeBtn" class="theme-btn" type="button">🌙</button></div></header>
-<main><article class="article-page"><div class="container article-page-inner"><a class="back-link" href="articles.html">← Retour aux articles</a><p class="subtitle">ÉDUCATION · 15 SEPTEMBRE 2026</p><h1>Comment mieux apprendre ses cours d'ingénierie ?</h1><p class="article-lead">Comprendre durablement demande moins de relire et davantage d'expliquer, d'appliquer et de vérifier.</p><div class="article-body"><h2>Commencer par une question</h2><p>Avant d'ouvrir le cours, il est utile de formuler ce que l'on cherche à comprendre. Pourquoi cette force apparaît-elle ? Dans quelles conditions cette formule est-elle valable ? Une question précise donne une direction à la lecture.</p><h2>Faire travailler sa mémoire</h2><p>Après une première étude, fermer le document et reformuler l'idée avec ses propres mots. Un schéma, trois lignes de résumé ou quelques cartes de rappel révèlent rapidement les notions encore fragiles.</p><h2>Relier théorie et pratique</h2><p>Un concept devient plus clair lorsqu'il est associé à un exemple : une poutre réelle, un mécanisme observé ou un petit calcul. Les erreurs ne sont pas des échecs ; elles indiquent précisément ce qu'il faut revoir.</p><blockquote>Apprendre n'est pas accumuler des formules, c'est savoir quand et pourquoi les utiliser.</blockquote></div><a class="btn" href="index.html#contact">Partager une idée →</a></div></article></main>
-<footer><div class="container footer-content"><p>Tchogli Ayéfouni Magloire<br>Étudiant en Génie Mécanique</p><div class="footer-links"><a href="index.html">Accueil</a><a href="articles.html">Articles</a><a href="projets.html">Projets</a><a href="parcours.html">Parcours</a><a href="ressources.html">Ressources</a><a href="contact.html">Contact</a></div></div><div class="footer-bottom"><p>© <span class="current-year">2026</span> Tous droits réservés.</p></div></footer>
+
+<a class="skip-link" href="#contenu">Aller au contenu principal</a>
+
+<div class="read-progress" aria-hidden="true"></div>
+
+<!-- Bibliothèque d'icônes (SVG sprite) -->
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
+     focusable="false" xmlns="http://www.w3.org/2000/svg">
+
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 3v1.8M12 19.2V21M4.2 4.2l1.3 1.3M18.5 18.5l1.3 1.3M3 12h1.8M19.2 12H21M4.2 19.8l1.3-1.3M18.5 5.5l1.3-1.3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.9A8.6 8.6 0 1 1 11.1 3a6.8 6.8 0 0 0 9.9 9.9Z"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2s6 6.4 6 10.4a6 6 0 0 1-12 0c0-4 6-10.4 6-10.4Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2.2"/><path d="M5 15H4.2A1.2 1.2 0 0 1 3 13.8V4.2A1.2 1.2 0 0 1 4.2 3h9.6A1.2 1.2 0 0 1 15 4.2V5"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3.5 6.5 8.5 6.2 8.5-6.2"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2.5 3 9.8l7.7 3.5 3.5 7.7Z"/><path d="M21.5 2.5 10.7 13.3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 11h17"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.3 13.3 20.6a2 2 0 0 1-2.8 0l-7.1-7.1A2 2 0 0 1 2.8 12V5.2a2 2 0 0 1 2-2h6.8a2 2 0 0 1 1.4.6l7.6 7.5a2 2 0 0 1 0 2Z"/><circle cx="7.6" cy="7.6" r="1.2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4 20h16"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18.5 14v4.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5.2" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18.8" r="2.6"/><path d="m8.4 10.7 7.2-4.2M8.4 13.3l7.2 4.2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 13.5a4.2 4.2 0 0 0 5.9 0l2.9-2.9a4.2 4.2 0 0 0-5.9-5.9l-1.3 1.3"/><path d="M13.5 10.5a4.2 4.2 0 0 0-5.9 0l-2.9 2.9a4.2 4.2 0 0 0 5.9 5.9l1.3-1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.8"/><path d="M4.8 20.4a7.2 7.2 0 0 1 14.4 0"/></symbol>
+    <symbol id="i-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.2s7-6.3 7-11.2a7 7 0 1 0-14 0c0 4.9 7 11.2 7 11.2Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12a8.5 8.5 0 0 1-8.5 8.5H4.5l2.3-3.2A8.5 8.5 0 1 1 20.5 12Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.6C12 5 10.7 3.6 8.4 3.6H3v13.6h5.4C10.7 17.2 12 18.6 12 20.2"/><path d="M12 6.6c0-1.6 1.3-3 3.6-3H21v13.6h-5.4c-2.3 0-3.6 1.4-3.6 3"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.2H7.2A2.2 2.2 0 0 0 5 5.4v13.2a2.2 2.2 0 0 0 2.2 2.2h9.6a2.2 2.2 0 0 0 2.2-2.2V8Z"/><path d="M13.8 3.4V8h5.1"/><path d="M8.5 13h7M8.5 16.5h4.5"/></symbol>
+    <symbol id="i-graduate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 4.2-9 4.1 9 4.1 9-4.1Z"/><path d="M7 10.4V15c0 1.4 2.2 2.6 5 2.6s5-1.2 5-2.6v-4.6"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.2" width="18" height="13" rx="2.4"/><path d="M9 7.2V5.4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.8"/><path d="M3.5 12.6h17"/></symbol>
+    <symbol id="i-lightbulb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 18h5.6"/><path d="M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.4 10.9c.6.5 1 1.2 1 2h4.8c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.8"/><circle cx="12" cy="12" r="1.3"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 17 5.8-5.8 3.8 3.8L20 8.2"/><path d="M15 8.2h5v5"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20.5h18"/><rect x="5" y="11.5" width="3.6" height="6" rx="1.2"/><rect x="10.2" y="7.5" width="3.6" height="10" rx="1.2"/><rect x="15.4" y="13.5" width="3.6" height="4" rx="1.2"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.3v7.4L12 20.9 3.2 15.7V8.3L12 3.1Z"/><path d="M3.5 8.5 12 13.4l8.5-4.9"/><path d="M12 13.4v7.5"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.2 8.8 4.6L12 12.4 3.2 7.8Z"/><path d="m3.2 12.2 8.8 4.6 8.8-4.6"/><path d="m3.2 16.4 8.8 4.6 8.8-4.6"/></symbol>
+    <symbol id="i-ruler" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 15.2 15.2 3.4l5.4 5.4L8.8 20.6Z"/><path d="m7.6 11 2.2 2.2M11 7.6l2.2 2.2M14.4 4.2l2.2 2.2"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8l-4.6 4 4.6 4"/><path d="m15.4 8 4.6 4-4.6 4"/><path d="M13.4 4.8 10.6 19.2"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10.5 3v5.6L5.7 17a2.4 2.4 0 0 0 2.1 3.6h8.4a2.4 2.4 0 0 0 2.1-3.6L13.5 8.6V3"/><path d="M7.6 14.4h8.8"/></symbol>
+    <symbol id="i-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="2.2"/><path d="M10.5 2.6v4.4M13.5 2.6v4.4M10.5 17v4.4M13.5 17v4.4M2.6 10.5H7M2.6 13.5H7M17 10.5h4.4M17 13.5h4.4"/></symbol>
+    <symbol id="i-wind" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.2h9.4a2.9 2.9 0 1 0-2.9-2.9"/><path d="M3 15.8h13.4a2.9 2.9 0 1 1-2.9 2.9"/><path d="M3 12h16.4a2.9 2.9 0 1 0-2.9-2.9"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5.2 5.8v6.1c0 4.3 2.9 7.9 6.8 9.4 3.9-1.5 6.8-5.1 6.8-9.4V5.8Z"/><path d="m9.4 11.9 2 2 3.2-3.4"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11.5 3.8 1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6Z"/><path d="m18 15.4.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12a8.6 8.6 0 1 1-2.6-6.2"/><path d="M20.8 3.6v5h-5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m10.2 8.6 5.6 3.4-5.6 3.4Z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.2 12h17.6"/><path d="M12 3c2.6 2.6 3.9 5.7 3.9 9s-1.3 6.4-3.9 9c-2.6-2.6-3.9-5.7-3.9-9S9.4 5.6 12 3Z"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.2" rx="7.4" ry="3.2"/><path d="M4.6 6.2v11.6c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2V6.2"/><path d="M4.6 12c0 1.8 3.3 3.2 7.4 3.2s7.4-1.4 7.4-3.2"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.4 2.4 4.8 13.6h6l-1.2 8 8.6-11.2h-6Z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 4.4l4 4L8.8 19.2H4.8v-4Z"/><path d="m13.6 6.4 4 4"/></symbol>
+    <symbol id="i-nut" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 20 7.8v8.4l-8 4.6-8-4.6V7.8Z"/><circle cx="12" cy="12" r="3.1"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.4"/><path d="M12 2.2v3.4M12 18.4v3.4M3.4 5.6 6 8.2M18 15.8l2.6 2.6M2.2 12h3.4M18.4 12h3.4M3.4 18.4 6 15.8M18 8.2l2.6-2.6"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6.2 6.4 12 6.4 21.5 12 21.5 12 17.8 17.6 12 17.6 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5.4"/><path d="m8.6 13.8-1.4 7 4.8-2.8 4.8 2.8-1.4-7"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.4S3.6 15.4 3.6 9.8a4.7 4.7 0 0 1 8.4-3 4.7 4.7 0 0 1 8.4 3c0 5.6-8.4 10.6-8.4 10.6Z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+
+<!-- =========================================================
+     EN-TÊTE
+     ========================================================= -->
+
+<header class="site-header">
+    <div class="container nav-bar">
+
+        <a class="brand" href="index.html" aria-label="Accueil, Tchogli Ayéfouni Magloire">
+            <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <defs>
+                    <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                    </linearGradient>
+                </defs>
+                <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGrad)"></rect>
+                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                    <circle cx="24" cy="24" r="8.4"></circle>
+                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                </g>
+            </svg>
+            <span>
+                <span class="brand-name">Tchogli <span>Magloire</span></span>
+                <span class="brand-role">Génie mécanique</span>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a class="nav-link" href="index.html">Accueil</a>
+            <a class="nav-link active" href="articles.html" aria-current="page">Articles</a>
+            <a class="nav-link" href="projets.html">Projets</a>
+            <a class="nav-link" href="parcours.html">Parcours</a>
+            <a class="nav-link" href="ressources.html">Ressources</a>
+            <a class="nav-link" href="contact.html">Contact</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <div class="accent-wrap" id="accentWrap">
+                <button class="icon-btn" id="accentBtn" type="button"
+                        aria-expanded="false" aria-haspopup="true"
+                        aria-label="Changer la couleur d'accent" title="Couleur d'accent">
+                    <svg class="i" aria-hidden="true"><use href="#i-droplet"></use></svg>
+                </button>
+
+                <div class="accent-pop" id="accentPop" role="dialog" aria-label="Couleur d'accent">
+                    <span class="accent-pop-title">Couleur d'accent</span>
+                    <div class="accent-list">
+                        <button class="accent-swatch" type="button" data-accent="azur"
+                                aria-label="Accent azur" title="Azur"></button>
+                        <button class="accent-swatch" type="button" data-accent="ambre"
+                                aria-label="Accent ambre" title="Ambre"></button>
+                        <button class="accent-swatch" type="button" data-accent="emeraude"
+                                aria-label="Accent émeraude" title="Émeraude"></button>
+                        <button class="accent-swatch" type="button" data-accent="violet"
+                                aria-label="Accent violet" title="Violet"></button>
+                    </div>
+                    <p class="accent-pop-note">
+                        L'accent colore tout le site et reste mémorisé sur cet appareil.
+                    </p>
+                </div>
+            </div>
+
+            <button class="icon-btn" type="button" data-theme-toggle
+                    aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                    title="Passer en thème sombre">
+                <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+            </button>
+
+            <a class="btn sm nav-cta" href="contact.html">Me contacter</a>
+
+            <button class="burger" id="menuBtn" type="button"
+                    aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobilePanel">
+                <span></span>
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+
+<!-- MENU MOBILE -->
+
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+    <div class="mobile-overlay"></div>
+
+    <aside class="mobile-drawer" role="dialog" aria-label="Menu de navigation">
+
+        <div class="mobile-head">
+            <span class="brand">
+                <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="brandGradMenu" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" style="stop-color:var(--primary)"></stop>
+                            <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                        </linearGradient>
+                    </defs>
+                    <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradMenu)"></rect>
+                    <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                        <circle cx="24" cy="24" r="8.4"></circle>
+                        <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                    </g>
+                </svg>
+                <span>
+                    <span class="brand-name">Tchogli <span>Magloire</span></span>
+                    <span class="brand-role">Génie mécanique</span>
+                </span>
+            </span>
+
+            <button class="icon-btn" id="mobileClose" type="button" aria-label="Fermer le menu">
+                <svg class="i" aria-hidden="true"><use href="#i-close"></use></svg>
+            </button>
+        </div>
+
+        <nav class="m-nav" aria-label="Navigation mobile">
+            <a href="index.html">Accueil <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a class="active" href="articles.html">Articles <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="projets.html">Projets <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="parcours.html">Parcours <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="ressources.html">Ressources <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+            <a href="contact.html">Contact <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg></a>
+        </nav>
+
+        <p class="mobile-label">Apparence</p>
+
+        <div class="m-options">
+            <div class="m-option-row">
+                <span>Thème sombre</span>
+                <button class="icon-btn" type="button" data-theme-toggle
+                        aria-pressed="false" aria-label="Basculer entre thème clair et sombre"
+                        title="Passer en thème sombre">
+                    <svg class="i ic-moon" aria-hidden="true"><use href="#i-moon"></use></svg>
+                    <svg class="i ic-sun" aria-hidden="true"><use href="#i-sun"></use></svg>
+                </button>
+            </div>
+
+            <div class="m-option-row">
+                <span>Couleur</span>
+                <div class="accent-list">
+                    <button class="accent-swatch" type="button" data-accent="azur"
+                            aria-label="Accent azur" title="Azur"></button>
+                    <button class="accent-swatch" type="button" data-accent="ambre"
+                            aria-label="Accent ambre" title="Ambre"></button>
+                    <button class="accent-swatch" type="button" data-accent="emeraude"
+                            aria-label="Accent émeraude" title="Émeraude"></button>
+                    <button class="accent-swatch" type="button" data-accent="violet"
+                            aria-label="Accent violet" title="Violet"></button>
+                </div>
+            </div>
+        </div>
+
+        <a class="btn block m-cta" href="contact.html">
+            Écrire un message
+            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+        </a>
+
+    </aside>
+</div>
+
+
+<main id="contenu">
+
+    <article class="article-page">
+        <div class="container">
+
+            <nav class="breadcrumb" aria-label="Fil d'Ariane">
+                <a href="index.html">Accueil</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <a href="articles.html">Articles</a>
+                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <span>Méthodes de travail</span>
+            </nav>
+
+            <div class="article-head">
+                <p class="eyebrow">Méthodes de travail</p>
+                <h1>Comment apprendre l'ingénierie sans se noyer</h1>
+                <p class="article-lead">
+                    Entre les formules, les logiciels et les projets, la charge paraît
+                    infinie. Quelques principes simples permettent d'avancer chaque
+                    semaine sans s'épuiser, et de retenir ce qui compte.
+                </p>
+
+                <div class="article-meta">
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-calendar"></use></svg>
+                        3 septembre 2026
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-clock"></use></svg>
+                        <span data-reading-meta>4 min de lecture</span>
+                    </span>
+                    <span class="meta">
+                        <svg class="i" aria-hidden="true"><use href="#i-user"></use></svg>
+                        Tchogli Ayéfouni Magloire
+                    </span>
+                </div>
+            </div>
+
+            <div class="article-hero-img">
+                <img src="assets/article-apprentissage.png"
+                     alt="Bureau d'étude avec notes manuscrites, formules et fiches de révision">
+            </div>
+
+            <div class="article-layout">
+
+                <div class="article-main">
+
+                    <div class="article-body">
+
+                        <h2>Le problème n'est pas la quantité</h2>
+
+                        <p>
+                            Un cours de résistance des matériaux, un logiciel de CAO à
+                            apprivoiser, un projet à rendre, des travaux pratiques à préparer :
+                            la liste paraît interminable. Pourtant, la difficulté ne vient
+                            rarement du volume. Elle vient de l'effort dispersé : ouvrir un
+                            document, le refermer, en ouvrir un autre, sans jamais transformer
+                            la lecture en compétence.
+                        </p>
+
+                        <p>
+                            Apprendre l'ingénierie, c'est construire des modèles mentaux
+                            solides : savoir ce que fait une formule, quand elle s'applique
+                            et quoi faire quand elle ne s'applique plus. Cela demande moins
+                            d'heures de survol et plus d'occasions de manipuler.
+                        </p>
+
+                        <p>
+                            Une illusion fréquente consiste à confondre heures passées et
+                            progrès réels. Relire un chapitre souligné donne une impression
+                            de familiarité, mais cette impression s'effondre devant une copie
+                            blanche ou une pièce à dimensionner. Le seul indicateur fiable
+                            reste la capacité à refaire, expliquer ou calculer, sans le
+                            support.
+                        </p>
+
+                        <h2>Commencer par une question, pas par une page</h2>
+
+                        <p>
+                            Avant d'ouvrir un chapitre, écrire ce que l'on cherche à
+                            comprendre. Pourquoi cette contrainte apparaît-elle ici ? Dans
+                            quelles conditions cette hypothèse tient-elle ? Que se passe-t-il
+                            si elle tombe ? Une question précise donne une direction à la
+                            lecture et transforme un texte passif en recherche de réponse.
+                        </p>
+
+                        <p>
+                            À la fin de la séance, la même question sert de test : si l'on
+                            peut y répondre avec ses propres mots, la séance a produit
+                            quelque chose. Sinon, on sait exactement où revenir, et ce
+                            n'est plus une page entière, juste un point précis.
+                        </p>
+
+                        <h2>La routine d'une séance de travail</h2>
+
+                        <ul class="check-list">
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Une question de départ écrite</strong> en haut de la
+                                feuille, avant toute lecture.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Un bloc court et régulier</strong> : quarante minutes de
+                                concentration valent mieux que trois heures de navigation
+                                entre les onglets.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Une reformulation sans le support</strong> à la fin :
+                                schéma, trois lignes de résumé, exemple chiffré.</span>
+                            </li>
+                            <li>
+                                <svg class="i" aria-hidden="true"><use href="#i-check"></use></svg>
+                                <span><strong>Une note de blocage</strong> : ce qui reste flou, écrit en
+                                une phrase, pour le lendemain.</span>
+                            </li>
+                        </ul>
+
+                        <h2>Travailler la mémoire active</h2>
+
+                        <p>
+                            Relire donne l'impression de savoir ; se tester le prouve. Après
+                            une première étude, fermer le document et reformuler l'idée à voix
+                            haute, griffonner un schéma de mémoire, refaire la démonstration
+                            sans regarder. C'est inconfortable, précisément parce que
+                            l'effort construit la trace.
+                        </p>
+
+                        <p>
+                            Quelques cartes de rappel, revues à intervalles espacés, suffisent
+                            pour les définitions, les unités et les ordres de grandeur. Le
+                            reste (la vraie compréhension) vient des exercices et des projets,
+                            pas des fiches.
+                        </p>
+
+                        <p>
+                            Le rythme compte autant que l'effort : une notion revue le soir
+                            même, puis deux jours après, puis une semaine plus tard, résiste
+                            bien mieux qu'une session unique de trois heures. Ces passages
+                            courts et espacés coûtent peu de temps et transforment une
+                            connaissance fragile en acquis durable.
+                        </p>
+
+                        <h2>Relier chaque formule à un objet réel</h2>
+
+                        <p>
+                            Un concept devient solide lorsqu'il est associé à un exemple :
+                            une poutre observée sur un chantier, un mécanisme démonté à
+                            l'atelier, une pièce imprimée en 3D. La théorie cesse alors d'être
+                            une abstraction et devient une explication du monde.
+                        </p>
+
+                        <p>
+                            Et quand un calcul ne tombe pas juste, ce n'est pas un échec : c'est
+                            l'endroit exact où la compréhension progresse. Chercher l'erreur (unité oubliée, hypothèse fausse, ordre des opérations) vaut trois
+                            relectures de cours.
+                        </p>
+
+                        <p>
+                            Un exemple vaut mieux qu'une définition supplémentaire : estimer
+                            l'allongement d'un câble avant de le voir tendu, prévoir la flèche
+                            d'une poutre avant de la charger. Chaque fois que le calcul annonce
+                            ce que l'on observe ensuite, la confiance dans la théorie augmente,
+                            et la théorie se retient toute seule.
+                        </p>
+
+                        <div class="callout">
+                            <strong>
+                                <svg class="i" aria-hidden="true"><use href="#i-target"></use></svg>
+                                Trois questions après chaque chapitre
+                            </strong>
+                            <ul>
+                                <li>Que calcule cette formule, et sous quelles hypothèses ?</li>
+                                <li>Dans quel cas réel l'ai-je déjà vue à l'œuvre ?</li>
+                                <li>Que se passerait-il si l'hypothèse principale tombait ?</li>
+                            </ul>
+                        </div>
+
+                        <h2>Accepter de ne pas tout comprendre tout de suite</h2>
+
+                        <p>
+                            Certaines notions ne se révèlent qu'à la troisième rencontre :
+                            une fois en cours, une fois en exercice, une fois en projet. Vouloir
+                            tout maîtriser du premier coup bloque l'avancée. Mieux vaut noter
+                            le point obscur, continuer, et revenir : le recul fait souvent
+                            l'essentiel du travail.
+                        </p>
+
+                        <p>
+                            C'est la même logique en conception : un modèle 3D se construit
+                            par esquisses successives, jamais parfait du premier jet. La
+                            compréhension suit la même méthode.
+                        </p>
+
+                        <h2>Organiser la semaine, pas la journée</h2>
+
+                        <p>
+                            Un objectif hebdomadaire vérifiable (comprendre la torsion,
+                            terminer l'assemblage du réducteur, rédiger la note de calcul)
+                            vaut mieux qu'un planning horaire minuté qui s'effondre dès le
+                            premier imprévu. La semaine absorbe les retards ; la journée,
+                            non.
+                        </p>
+
+                        <p>
+                            Garder enfin un journal des blocages : chaque question non
+                            résolue y reste écrite. Relu une fois par semaine, il indique où
+                            porter l'effort et révèle les progrès : les questions d'il y a un
+                            mois paraissent souvent simples aujourd'hui.
+                        </p>
+
+                        <blockquote>
+                            Apprendre n'est pas accumuler des formules,
+                            c'est savoir quand et pourquoi les utiliser.
+                        </blockquote>
+
+                    </div>
+
+                    <div class="share-row">
+                        <span class="label">Partager</span>
+                        <button class="share-btn" type="button" data-copy-link
+                                data-copy-message="Lien de l'article copié !">
+                            <svg class="i" aria-hidden="true"><use href="#i-link"></use></svg>
+                            Copier le lien
+                        </button>
+                    </div>
+
+                    <div class="author-box">
+                        <div class="author-avatar">
+                            <svg viewBox="0 0 48 48" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="brandGradAuthor" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                        <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradAuthor)"></rect>
+                                <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                                    <circle cx="24" cy="24" r="8.4"></circle>
+                                    <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                                    <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div>
+                            <strong>Tchogli Ayéfouni Magloire</strong>
+                            <p>
+                                Étudiant en génie mécanique. J'écris ce que j'apprends
+                                en concevant, en calculant et en fabriquant.
+                            </p>
+                            <a class="text-link" href="contact.html">
+                                Me poser une question
+                                <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <aside class="article-side">
+
+                    <nav class="toc" aria-label="Sommaire de l'article">
+                        <span class="toc-title">Sommaire</span>
+                        <ol></ol>
+                    </nav>
+
+                    <div class="side-card">
+                        <strong>Un blocage sur une notion ?</strong>
+                        <p>
+                            Décrivez ce qui résiste : je partage volontiers la méthode
+                            ou l'exemple qui m'a fait débloquer.
+                        </p>
+                        <a class="btn sm" href="contact.html">
+                            Poser la question
+                            <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+                        </a>
+                    </div>
+
+                    <div class="side-card">
+                        <strong>Méthodes et outils</strong>
+                        <p>
+                            Cours, exercices et outils classés par thème, avec le temps
+                            nécessaire et le niveau attendu pour chacun.
+                        </p>
+                        <a class="text-link" href="ressources.html">
+                            Voir les ressources
+                            <svg class="i" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                        </a>
+                    </div>
+
+                </aside>
+
+            </div>
+
+            <nav class="post-nav" aria-label="Navigation entre les articles">
+                <a href="articles.html">
+                    <span>Tous les articles</span>
+                    <strong>Revenir à la liste des articles</strong>
+                </a>
+                <a class="next" href="article-programmation.html">
+                    <span>Article suivant</span>
+                    <strong>Python pour l'ingénieur&nbsp;: automatiser ses calculs</strong>
+                </a>
+            </nav>
+
+        </div>
+    </article>
+
+
+    <!-- =========================================================
+         APPEL À L'ACTION
+         ========================================================= -->
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box reveal">
+                <div>
+                    <p class="eyebrow">Travaillons ensemble</p>
+                    <h2>Un projet mécanique à documenter ou à concevoir ?</h2>
+                    <p>
+                        Étude, calcul, modélisation 3D, plans de fabrication, notice
+                        technique : dites-moi ce dont vous avez besoin et je vous
+                        réponds avec une proposition claire.
+                    </p>
+                </div>
+                <a class="btn" href="contact.html">
+                    Discuter d'un projet
+                    <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section tight">
+        <div class="container">
+            <div class="newsletter-box reveal">
+                <div>
+                    <p class="eyebrow">La lettre du dimanche</p>
+                    <h2>Suivez l'avancement des projets</h2>
+                    <p>
+                        Une fois par mois : un projet décortiqué, une erreur expliquée,
+                        une méthode testée. Le récit honnête de ce que j'apprends.
+                    </p>
+                </div>
+
+                <div>
+                    <form class="newsletter-form"
+                          action="https://formsubmit.co/maglo9501@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" value="Nouvel abonné à la lettre du dimanche">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off">
+
+                        <label class="sr-only" for="newsletter-email">Votre adresse email</label>
+                        <input id="newsletter-email" type="email" name="email"
+                               placeholder="votre@email.com" required>
+                        <button class="btn" type="submit">
+                            S'abonner
+                            <svg class="i" aria-hidden="true"><use href="#i-mail"></use></svg>
+                        </button>
+                    </form>
+                    <p class="form-note">
+                        Votre adresse sert uniquement à l'envoi de la lettre.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+<!-- =========================================================
+     PIED DE PAGE
+     ========================================================= -->
+
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+                <a class="brand" href="index.html">
+                    <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="brandGradFoot" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" style="stop-color:var(--primary)"></stop>
+                                <stop offset="1" style="stop-color:var(--primary-strong)"></stop>
+                            </linearGradient>
+                        </defs>
+                        <rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#brandGradFoot)"></rect>
+                        <g fill="none" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round">
+                            <circle cx="24" cy="24" r="8.4"></circle>
+                            <circle cx="24" cy="24" r="2.6" fill="#ffffff" stroke="none"></circle>
+                            <path d="M24 6.6v6.2M24 35.2v6.2M6.6 24h6.2M35.2 24h6.2M11.3 11.3l4.4 4.4M32.3 32.3l4.4 4.4M11.3 36.7l4.4-4.4M32.3 15.7l4.4-4.4"></path>
+                        </g>
+                    </svg>
+                    <span>
+                        <span class="brand-name">Tchogli <span>Magloire</span></span>
+                        <span class="brand-role">Génie mécanique</span>
+                    </span>
+                </a>
+
+                <p>
+                    Portfolio d'un étudiant en génie mécanique : projets de conception,
+                    articles techniques et ressources pour progresser, de la théorie
+                    à la pièce fabriquée.
+                </p>
+
+                <div class="socials">
+                    <a class="social-btn" href="contact.html"
+                       aria-label="Ouvrir la page contact" title="Page contact">
+                        <svg aria-hidden="true"><use href="#i-message"></use></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="f-col">
+                <h4>Navigation</h4>
+                <ul class="f-links">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="projets.html">Projets</a></li>
+                    <li><a href="parcours.html">Parcours</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Explorer</h4>
+                <ul class="f-links">
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="articles.html">Tous les articles</a></li>
+                    <li><a href="projets.html">Tous les projets</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="f-col">
+                <h4>Contact</h4>
+                <ul class="f-contact">
+                    <li>
+                        <svg class="i" aria-hidden="true"><use href="#i-message"></use></svg>
+                        <a href="contact.html">Formulaire de contact</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span class="current-year">2026</span> Tchogli Ayéfouni Magloire. Tous droits réservés.</p>
+            <p>Conçu et écrit avec <span class="heart">♥</span> en HTML, CSS et JavaScript.</p>
+        </div>
+
+    </div>
+</footer>
+
+
+<button class="to-top" id="toTop" type="button" aria-label="Revenir en haut de la page" title="Haut de page">
+    <svg class="i" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+    <svg class="i" aria-hidden="true"><use href="#i-check-circle"></use></svg>
+    <span data-toast-text>Copié !</span>
+</div>
+
+
 <script src="script.js"></script>
+
 </body>
 </html>
