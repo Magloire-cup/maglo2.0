@@ -610,4 +610,322 @@
         element.textContent = new Date().getFullYear();
     });
 
+
+    /* ---------------------------------------------------------
+       12. LANGUE DU SITE (TRADUCTION AUTOMATIQUE)
+       --------------------------------------------------------- */
+
+    const LANGUAGES = [
+        { code: "fr", name: "Français", fr: "français" },
+        { code: "en", name: "English", fr: "anglais" },
+        { code: "es", name: "Español", fr: "espagnol" },
+        { code: "pt", name: "Português", fr: "portugais" },
+        { code: "de", name: "Deutsch", fr: "allemand" },
+        { code: "it", name: "Italiano", fr: "italien" },
+        { code: "nl", name: "Nederlands", fr: "néerlandais" },
+        { code: "ar", name: "العربية", fr: "arabe" },
+        { code: "zh-CN", name: "中文（简体）", fr: "chinois simplifié" },
+        { code: "zh-TW", name: "中文（繁體）", fr: "chinois traditionnel" },
+        { code: "ja", name: "日本語", fr: "japonais" },
+        { code: "ko", name: "한국어", fr: "coréen" },
+        { code: "ru", name: "Русский", fr: "russe" },
+        { code: "uk", name: "Українська", fr: "ukrainien" },
+        { code: "pl", name: "Polski", fr: "polonais" },
+        { code: "ro", name: "Română", fr: "roumain" },
+        { code: "tr", name: "Türkçe", fr: "turc" },
+        { code: "sv", name: "Svenska", fr: "suédois" },
+        { code: "no", name: "Norsk", fr: "norvégien" },
+        { code: "da", name: "Dansk", fr: "danois" },
+        { code: "fi", name: "Suomi", fr: "finnois" },
+        { code: "cs", name: "Čeština", fr: "tchèque" },
+        { code: "sk", name: "Slovenčina", fr: "slovaque" },
+        { code: "hu", name: "Magyar", fr: "hongrois" },
+        { code: "el", name: "Ελληνικά", fr: "grec" },
+        { code: "he", name: "עברית", fr: "hébreu" },
+        { code: "hi", name: "हिन्दी", fr: "hindi" },
+        { code: "bn", name: "বাংলা", fr: "bengali" },
+        { code: "ur", name: "اردو", fr: "ourdou" },
+        { code: "fa", name: "فارسی", fr: "persan" },
+        { code: "vi", name: "Tiếng Việt", fr: "vietnamien" },
+        { code: "th", name: "ไทย", fr: "thaï" },
+        { code: "id", name: "Bahasa Indonesia", fr: "indonésien" },
+        { code: "ms", name: "Bahasa Melayu", fr: "malais" },
+        { code: "fil", name: "Filipino", fr: "filipino" },
+        { code: "sw", name: "Kiswahili", fr: "swahili" },
+        { code: "am", name: "አማርኛ", fr: "amharique" },
+        { code: "ha", name: "Hausa", fr: "haoussa" },
+        { code: "yo", name: "Yorùbá", fr: "yoruba" },
+        { code: "ig", name: "Igbo", fr: "igbo" },
+        { code: "zu", name: "isiZulu", fr: "zoulou" },
+        { code: "af", name: "Afrikaans", fr: "afrikaans" },
+        { code: "so", name: "Soomaali", fr: "somali" },
+        { code: "wo", name: "Wolof", fr: "wolof" },
+        { code: "ee", name: "Ewe", fr: "éwé" },
+        { code: "tw", name: "Twi", fr: "twi" },
+        { code: "bm", name: "Bamanankan", fr: "bambara" },
+        { code: "ln", name: "Lingála", fr: "lingala" },
+        { code: "lg", name: "Luganda", fr: "luganda" },
+        { code: "rw", name: "Kinyarwanda", fr: "kinyarwanda" },
+        { code: "mg", name: "Malagasy", fr: "malgache" },
+        { code: "ka", name: "ქართული", fr: "géorgien" },
+        { code: "hy", name: "Հայերեն", fr: "arménien" },
+        { code: "az", name: "Azərbaycan", fr: "azéri" },
+        { code: "kk", name: "Қазақша", fr: "kazakh" },
+        { code: "uz", name: "Oʻzbekcha", fr: "ouzbek" },
+        { code: "mn", name: "Монгол", fr: "mongol" },
+        { code: "ne", name: "नेपाली", fr: "népalais" },
+        { code: "si", name: "සිංහල", fr: "cingalais" },
+        { code: "ta", name: "தமிழ்", fr: "tamoul" },
+        { code: "te", name: "తెలుగు", fr: "télougou" },
+        { code: "ml", name: "മലയാളം", fr: "malayalam" },
+        { code: "kn", name: "ಕನ್ನಡ", fr: "kannada" },
+        { code: "gu", name: "ગુજરાતી", fr: "gujarati" },
+        { code: "mr", name: "मराठी", fr: "marathi" },
+        { code: "pa", name: "ਪੰਜਾਬੀ", fr: "pendjabi" },
+        { code: "my", name: "မြန်မာ", fr: "birman" },
+        { code: "km", name: "ខ្មែរ", fr: "khmer" },
+        { code: "lo", name: "ລາວ", fr: "lao" },
+        { code: "be", name: "Беларуская", fr: "biélorusse" },
+        { code: "bg", name: "Български", fr: "bulgare" },
+        { code: "sr", name: "Српски", fr: "serbe" },
+        { code: "hr", name: "Hrvatski", fr: "croate" },
+        { code: "sl", name: "Slovenščina", fr: "slovène" },
+        { code: "lt", name: "Lietuvių", fr: "lituanien" },
+        { code: "lv", name: "Latviešu", fr: "letton" },
+        { code: "et", name: "Eesti", fr: "estonien" },
+        { code: "is", name: "Íslenska", fr: "islandais" },
+        { code: "ga", name: "Gaeilge", fr: "irlandais" },
+        { code: "cy", name: "Cymraeg", fr: "gallois" },
+        { code: "gl", name: "Galego", fr: "galicien" },
+        { code: "ca", name: "Català", fr: "catalan" },
+        { code: "eu", name: "Euskara", fr: "basque" },
+        { code: "sq", name: "Shqip", fr: "albanais" },
+        { code: "mk", name: "Македонски", fr: "macédonien" },
+        { code: "bs", name: "Bosanski", fr: "bosnien" },
+        { code: "mt", name: "Malti", fr: "maltais" },
+        { code: "ht", name: "Kreyòl ayisyen", fr: "créole haïtien" },
+        { code: "eo", name: "Esperanto", fr: "espéranto" },
+        { code: "la", name: "Latina", fr: "latin" },
+        { code: "mi", name: "Te Reo Māori", fr: "maori" },
+        { code: "haw", name: "ʻŌlelo Hawaiʻi", fr: "hawaïen" },
+        { code: "sm", name: "Gagana Sāmoa", fr: "samoan" },
+        { code: "to", name: "Lea faka-Tonga", fr: "tongien" },
+        { code: "fj", name: "Vosa Vakaviti", fr: "fidjien" },
+        { code: "st", name: "Sesotho", fr: "sesotho" },
+        { code: "sn", name: "chiShona", fr: "shona" },
+        { code: "xh", name: "isiXhosa", fr: "xhosa" },
+        { code: "ny", name: "Chichewa", fr: "chichewa" },
+        { code: "su", name: "Basa Sunda", fr: "soundanais" },
+        { code: "jv", name: "Basa Jawa", fr: "javanais" },
+        { code: "ceb", name: "Cebuano", fr: "cébouano" },
+        { code: "co", name: "Corsu", fr: "corse" },
+        { code: "fy", name: "Frysk", fr: "frison" },
+        { code: "lb", name: "Lëtzebuergesch", fr: "luxembourgeois" },
+        { code: "ky", name: "Кыргызча", fr: "kirghize" },
+        { code: "tg", name: "Тоҷикӣ", fr: "tadjik" },
+        { code: "tk", name: "Türkmençe", fr: "turkmène" },
+        { code: "ps", name: "پښتو", fr: "pachto" },
+        { code: "sd", name: "سنڌي", fr: "sindhi" },
+        { code: "ku", name: "Kurdî", fr: "kurde" },
+        { code: "or", name: "ଓଡ଼ିଆ", fr: "oriya" },
+        { code: "hmn", name: "Hmoob", fr: "hmong" },
+        { code: "yi", name: "ייִדיש", fr: "yiddish" },
+    ];
+
+    const langWrap = document.getElementById("langWrap");
+    const langButton = document.getElementById("langBtn");
+    const langPop = document.getElementById("langPop");
+    const langList = document.getElementById("langList");
+    const langSearch = document.getElementById("langSearch");
+    const langCode = document.getElementById("langCode");
+    const langSelects = [...document.querySelectorAll("[data-lang-select]")];
+
+    function readLanguageCookie() {
+        const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
+        if (!match) {
+            return "";
+        }
+        const parts = decodeURIComponent(match[1]).split("/");
+        return parts[2] || "";
+    }
+
+    function currentLanguage() {
+        const cookieValue = readLanguageCookie();
+        if (cookieValue) {
+            return cookieValue;
+        }
+        try {
+            return localStorage.getItem("site-lang") || "fr";
+        } catch (error) {
+            return "fr";
+        }
+    }
+
+    function languageBadge(code) {
+        return code === "fr" ? "FR" : code.split("-")[0].toUpperCase();
+    }
+
+    function writeLanguageCookie(value) {
+        const expired = "; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        const hosts = [""];
+        if (location.hostname && location.hostname.indexOf(".") !== -1) {
+            hosts.push(location.hostname, "." + location.hostname);
+        }
+        hosts.forEach((host) => {
+            const domain = host ? "; domain=" + host : "";
+            document.cookie =
+                "googtrans=" + value + "; path=/" + domain + (value ? "" : expired);
+        });
+    }
+
+    function applyLanguage(code) {
+        const target = code || "fr";
+        if (target === activeLanguage) {
+            return;
+        }
+        try {
+            localStorage.setItem("site-lang", target);
+        } catch (error) {
+            /* stockage indisponible : on continue avec le cookie */
+        }
+        writeLanguageCookie(target === "fr" ? "" : "/fr/" + target);
+        location.reload();
+    }
+
+    let activeLanguage = currentLanguage();
+    if (!LANGUAGES.some((lang) => lang.code === activeLanguage)) {
+        activeLanguage = "fr";
+    }
+    if (langCode) {
+        langCode.textContent = languageBadge(activeLanguage);
+    }
+
+    function renderLanguageList(filter) {
+        if (!langList) {
+            return;
+        }
+        const query = (filter || "").trim().toLowerCase();
+        const visible = LANGUAGES.filter((lang) => {
+            if (!query) {
+                return true;
+            }
+            return (
+                lang.name.toLowerCase().indexOf(query) !== -1 ||
+                lang.fr.toLowerCase().indexOf(query) !== -1 ||
+                lang.code.toLowerCase().indexOf(query) !== -1
+            );
+        });
+
+        langList.innerHTML = "";
+
+        if (!visible.length) {
+            const empty = document.createElement("p");
+            empty.className = "lang-empty";
+            empty.textContent = "Aucune langue trouvée.";
+            langList.appendChild(empty);
+            return;
+        }
+
+        visible.forEach((lang) => {
+            const item = document.createElement("button");
+            item.type = "button";
+            item.className =
+                "lang-item" + (lang.code === activeLanguage ? " active" : "");
+            item.dataset.lang = lang.code;
+
+            const native = document.createElement("span");
+            native.textContent = lang.name;
+
+            const iso = document.createElement("span");
+            iso.className = "lang-iso";
+            iso.textContent = lang.code === "fr" ? "Référence" : lang.code;
+
+            item.appendChild(native);
+            item.appendChild(iso);
+            item.addEventListener("click", () => applyLanguage(lang.code));
+            langList.appendChild(item);
+        });
+    }
+
+    renderLanguageList("");
+
+    langSelects.forEach((select) => {
+        LANGUAGES.forEach((lang) => {
+            const option = document.createElement("option");
+            option.value = lang.code;
+            option.textContent = lang.name;
+            select.appendChild(option);
+        });
+        select.value = activeLanguage;
+        select.addEventListener("change", () => applyLanguage(select.value));
+    });
+
+    if (langButton && langPop) {
+        function closeLanguages() {
+            langPop.classList.remove("open");
+            langButton.setAttribute("aria-expanded", "false");
+        }
+
+        langButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            const isOpen = langPop.classList.contains("open");
+            if (isOpen) {
+                closeLanguages();
+                return;
+            }
+            langPop.classList.add("open");
+            langButton.setAttribute("aria-expanded", "true");
+            if (langSearch) {
+                langSearch.value = "";
+                renderLanguageList("");
+                langSearch.focus();
+            }
+        });
+
+        langPop.addEventListener("click", (event) => event.stopPropagation());
+
+        document.addEventListener("click", (event) => {
+            if (langWrap && !langWrap.contains(event.target)) {
+                closeLanguages();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeLanguages();
+            }
+        });
+
+        if (langSearch) {
+            langSearch.addEventListener("input", () => {
+                renderLanguageList(langSearch.value);
+            });
+        }
+    }
+
+    /* Google Traduction n'est chargé que si une autre langue est sélectionnée. */
+
+    if (activeLanguage !== "fr") {
+        const translateHost = document.createElement("div");
+        translateHost.id = "google_translate_element";
+        translateHost.className = "gt-host";
+        document.body.appendChild(translateHost);
+
+        window.googleTranslateElementInit = function () {
+            new window.google.translate.TranslateElement(
+                {
+                    pageLanguage: "fr",
+                    autoDisplay: false,
+                },
+                "google_translate_element"
+            );
+        };
+
+        const translateScript = document.createElement("script");
+        translateScript.src =
+            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+        translateScript.async = true;
+        document.body.appendChild(translateScript);
+    }
+
 })();

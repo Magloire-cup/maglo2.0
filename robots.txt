@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://magloire-cup.github.io/maglo2.0/sitemap.xml

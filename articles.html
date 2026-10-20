@@ -165,6 +165,25 @@
 
         <div class="nav-actions">
 
+            <div class="lang-wrap" id="langWrap">
+                <button class="icon-btn lang-btn" id="langBtn" type="button"
+                        aria-expanded="false" aria-haspopup="dialog"
+                        aria-label="Changer la langue du site" title="Langue du site">
+                    <svg class="i" aria-hidden="true"><use href="#i-globe"></use></svg>
+                    <span class="lang-code" id="langCode" translate="no">FR</span>
+                </button>
+
+                <div class="lang-pop" id="langPop" role="dialog" aria-label="Langue du site">
+                    <span class="accent-pop-title">Langue du site</span>
+                    <input class="lang-search" id="langSearch" type="search"
+                           placeholder="Rechercher une langue" autocomplete="off"
+                           aria-label="Rechercher une langue">
+                    <div class="lang-list" id="langList" translate="no"></div>
+                    <p class="accent-pop-note">
+                        Traduction automatique par Google. Le choix reste mémorisé sur cet appareil.
+                    </p>
+                </div>
+            </div>
             <div class="accent-wrap" id="accentWrap">
                 <button class="icon-btn" id="accentBtn" type="button"
                         aria-expanded="false" aria-haspopup="true"
@@ -280,6 +299,10 @@
             </div>
         </div>
 
+        <p class="mobile-label">Langue</p>
+
+        <select class="lang-select m-lang-select notranslate" data-lang-select
+                aria-label="Langue du site" translate="no"></select>
         <a class="btn block m-cta" href="contact.html">
             Écrire un message
             <svg class="i" aria-hidden="true"><use href="#i-send"></use></svg>
